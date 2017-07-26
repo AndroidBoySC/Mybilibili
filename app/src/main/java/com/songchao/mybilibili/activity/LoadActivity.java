@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 import com.songchao.mybilibili.MainActivity;
 import com.songchao.mybilibili.R;
@@ -32,8 +33,10 @@ public class LoadActivity extends AppCompatActivity{
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                 Intent mainIntent = new Intent(LoadActivity.this, MainActivity.class);
                 LoadActivity.this.startActivity(mainIntent);
+                //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
                 LoadActivity.this.finish();
             }
         },LOAD_DISPLAY_TIME);
