@@ -18,13 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
         </activity>
-        <activity android:name=".GameActivity">
+        <activity android:name=".activity.GameActivity">
         </activity>
-        <activity android:name=".DownloadActivity">
+        <activity android:name=".activity.DownloadActivity">
         </activity>
-        <activity android:name=".SearchActivity">
+        <activity android:name=".activity.SearchActivity">
         </activity>
     </application>
 

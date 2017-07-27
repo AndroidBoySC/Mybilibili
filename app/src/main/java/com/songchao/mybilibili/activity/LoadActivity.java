@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
-import com.songchao.mybilibili.MainActivity;
 import com.songchao.mybilibili.R;
 
 /**
