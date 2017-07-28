@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">哔哩不哔哩</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--<style name="MyTheme.NoTitleBar.CustomBackground" parent="@android:style/Theme.Black">-->
     <!--<item name="android:windowBackground">@drawable/yasuo</item>-->
     <!--<item name="android:windowNoTitle">true</item>-->
