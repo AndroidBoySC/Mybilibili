@@ -26,6 +26,22 @@
         </activity>
         <activity android:name=".activity.SearchActivity">
         </activity>
+        <activity android:name=".activity.HistoryActivity">
+        </activity>
+        <activity android:name=".activity.HuancunActivity">
+        </activity>
+        <activity android:name=".activity.ShoucangActivity">
+        </activity>
+        <activity android:name=".activity.ShaohouActivity">
+        </activity>
+        <activity android:name=".activity.HuiyuanActivity">
+        </activity>
+        <activity android:name=".activity.SettingActivity">
+        </activity>
+        <activity android:name=".activity.ThemeActivity">
+        </activity>
+        <activity android:name=".activity.NightActivity">
+        </activity>
     </application>
 
 </manifest>

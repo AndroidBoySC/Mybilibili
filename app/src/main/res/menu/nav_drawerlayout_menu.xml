@@ -9,12 +9,10 @@
         <item
             android:id="@+id/nav_history"
             android:icon="@mipmap/history"
-            android:checkable="false"
             android:title="历史记录"/>
         <item
             android:id="@+id/nav_huancun"
             android:icon="@mipmap/huancun"
-            android:checkable="false"
             android:title="离线缓存"/>
         </group>
     <group android:checkableBehavior="single">
@@ -40,12 +38,10 @@
         <item
             android:id="@+id/nav_theme"
             android:icon="@mipmap/theme"
-            android:checkable="false"
             android:title="主题"/>
         <item
             android:id="@+id/nav_night"
             android:icon="@mipmap/night"
-            android:checkable="false"
             android:title="夜间"/>
 
     </group>

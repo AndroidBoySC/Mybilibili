@@ -2,14 +2,14 @@ package com.songchao.mybilibili.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,32 +17,30 @@ import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.adapter.MyFragmentPageAdapter;
-import com.songchao.mybilibili.adapter.RecyclerViewCardAdapter;
 import com.songchao.mybilibili.fragment.DongTaiFragment;
 import com.songchao.mybilibili.fragment.FenQuFragment;
 import com.songchao.mybilibili.fragment.TuiJianFragment;
 import com.songchao.mybilibili.fragment.ZhiBoFragment;
 import com.songchao.mybilibili.fragment.ZhuiFanFragment;
-import com.songchao.mybilibili.model.ImageCard;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
     private long lastPressTime = 0;
     //ActionBar mActionBar;
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
-    private RecyclerView mRecyclerView;
+    //private RecyclerView mRecyclerView;
     //先模拟假数据做出效果，后期会替换真实数据接口
-    private ImageCard[] mImageCards = {new ImageCard("one",R.mipmap.yasuo_01_cn),new ImageCard("two",R.mipmap.yasuo_04_cn),
-    new ImageCard("three",R.mipmap.yasuo_05_cn),new ImageCard("four",R.mipmap.yasuo_06_cn)};
-    private List<ImageCard> mImageCardList = new ArrayList<>();
-    private RecyclerViewCardAdapter mAdapter;
+    //private ImageCard[] mImageCards = {new ImageCard("one",R.mipmap.yasuo_01_cn),new ImageCard("two",R.mipmap.yasuo_04_cn),
+    //new ImageCard("three",R.mipmap.yasuo_05_cn),new ImageCard("four",R.mipmap.yasuo_06_cn)};
+    //private List<ImageCard> mImageCardList = new ArrayList<>();
+    //private RecyclerViewCardAdapter mAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +82,60 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mTabLayout.addTab(tab4);
         TabLayout.TabLayoutOnPageChangeListener listener = new TabLayout.TabLayoutOnPageChangeListener(mTabLayout);
         mViewPager.addOnPageChangeListener(listener);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_shouye:
+                        mDrawerLayout.closeDrawers();
+                        break;
+                    case R.id.nav_history:
+                        Intent intent = new Intent(MainActivity.this,HistoryActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_huancun:
+                        Intent intent1 = new Intent(MainActivity.this,HuancunActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_shoucang:
+                        Intent intent2 = new Intent(MainActivity.this,ShoucangActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_shaohou:
+                        Intent intent3 = new Intent(MainActivity.this,ShaohouActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_huiyuan:
+                        Intent intent4 = new Intent(MainActivity.this,HuiyuanActivity.class);
+                        startActivity(intent4);
+                        break;
+                    case R.id.nav_setting:
+                        Intent intent5 = new Intent(MainActivity.this,SettingActivity.class);
+                        startActivity(intent5);
+                        break;
+                    case R.id.nav_theme:
+                        Intent intent6 = new Intent(MainActivity.this,ThemeActivity.class);
+                        startActivity(intent6);
+                        break;
+                    case R.id.nav_night:
+                        Intent intent7 = new Intent(MainActivity.this,NightActivity.class);
+                        startActivity(intent7);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void init() {
-        mImageCardList.clear();
-        for (int i = 0; i < 30; i++) {
-            Random random = new Random();
-            int index = random.nextInt(mImageCards.length);
-            mImageCardList.add(mImageCards[index]);
-        }
+//        mImageCardList.clear();
+//        for (int i = 0; i < 30; i++) {
+//            Random random = new Random();
+//            int index = random.nextInt(mImageCards.length);
+//            mImageCardList.add(mImageCards[index]);
+//        }
     }
 
     private void initView() {
@@ -103,13 +146,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mToolbar.setLogo(R.mipmap.toolicon2);
         mToolbar.setOnMenuItemClickListener(mOnMenuItemClickListener);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
-        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerViewCardAdapter(this,mImageCardList);
-        mRecyclerView.setAdapter(mAdapter);
+        //mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
+        //GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        //mRecyclerView.setLayoutManager(layoutManager);
+        //mAdapter = new RecyclerViewCardAdapter(this,mImageCardList);
+        //mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
