@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.youth.banner.Banner
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/banner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:indicator_drawable_selected="@color/colorAccent"
+    app:indicator_drawable_unselected="@android:color/white"
+    app:indicator_height="4dp"
+    app:indicator_margin="4dp"
+    app:indicator_width="20dp"/>

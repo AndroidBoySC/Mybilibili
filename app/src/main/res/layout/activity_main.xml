@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.songchao.mybilibili.activity.MainActivity">
 
     <android.support.v4.widget.DrawerLayout
@@ -15,7 +16,8 @@
         android:layout_height="match_parent">
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -45,19 +47,13 @@
                     app:tabIndicatorHeight="3dp"
                     />
 
-
             </android.support.design.widget.AppBarLayout>
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_main"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
-
-                <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/rv_main"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
         </android.support.design.widget.CoordinatorLayout>
         <android.support.design.widget.NavigationView
@@ -67,54 +63,5 @@
             android:layout_gravity="start"
             app:menu="@menu/nav_drawerlayout_menu"
             app:headerLayout="@layout/nav_heafder"/>
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:orientation="vertical">-->
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="180dp"-->
-            <!--android:padding="10dp"-->
-            <!--android:background="@mipmap/navbac">-->
-            <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:id="@+id/icon_image"-->
-                <!--android:layout_width="70dp"-->
-                <!--android:layout_height="70dp"-->
-                <!--android:src="@mipmap/yasuo_02_cn"-->
-                <!--android:layout_centerInParent="true"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="点击头像登录"-->
-                <!--android:layout_below="@id/icon_image"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:textSize="14sp"-->
-                <!--android:textColor="#fff"/>-->
-        <!--</RelativeLayout>-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/shouye_main"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@mipmap/shouye"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="首页"-->
-                <!--android:textSize="14sp"/>-->
-        <!--</LinearLayout>-->
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-
-
-        <!--</RelativeLayout>-->
-
-    <!--</LinearLayout>-->
-
     </android.support.v4.widget.DrawerLayout>
-</FrameLayout>
+</LinearLayout>
