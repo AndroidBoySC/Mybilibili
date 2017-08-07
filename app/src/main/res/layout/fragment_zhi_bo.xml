@@ -10,6 +10,7 @@
         android:id="@+id/swip_zhibo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_zhibo"
             android:layout_width="match_parent"

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
@@ -26,6 +27,8 @@ import com.songchao.mybilibili.fragment.ZhuiFanFragment;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
     private long lastPressTime = 0;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private NavigationView mNavigationView;
+    private CircleImageView mCircleImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +131,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 return true;
             }
         });
+
+    }
+    public void Login(View view){
+        if(view != null){
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void init() {
@@ -149,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
+        mCircleImageView = (CircleImageView) findViewById(R.id.icon_image);
         //mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         //GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         //mRecyclerView.setLayoutManager(layoutManager);
