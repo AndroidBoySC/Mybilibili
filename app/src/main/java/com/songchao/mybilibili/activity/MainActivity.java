@@ -1,7 +1,12 @@
 package com.songchao.mybilibili.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
@@ -35,23 +41,22 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     //ActionBar mActionBar;
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
-    //private RecyclerView mRecyclerView;
-    //先模拟假数据做出效果，后期会替换真实数据接口
-    //private ImageCard[] mImageCards = {new ImageCard("one",R.mipmap.yasuo_01_cn),new ImageCard("two",R.mipmap.yasuo_04_cn),
-    //new ImageCard("three",R.mipmap.yasuo_05_cn),new ImageCard("four",R.mipmap.yasuo_06_cn)};
-    //private List<ImageCard> mImageCardList = new ArrayList<>();
-    //private RecyclerViewCardAdapter mAdapter;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private NavigationView mNavigationView;
     private CircleImageView mCircleImageView;
+    private TextView textViewLogin;
+    private IntentFilter mFilter;
+    private MainActivity.NotifyLoginUIReceiver mNotifyLoginUIReceiver;
+    private SharedPreferences mPreferences;
+    //取数据时不用editor
+    //private SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        init();
         initView();
         initData();
         //隐藏Actionbar
@@ -134,19 +139,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
     public void Login(View view){
-        if(view != null){
-            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    private void init() {
-//        mImageCardList.clear();
-//        for (int i = 0; i < 30; i++) {
-//            Random random = new Random();
-//            int index = random.nextInt(mImageCards.length);
-//            mImageCardList.add(mImageCards[index]);
+//        if(view != null){
+//            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+//            startActivity(intent);
 //        }
+
     }
 
     private void initView() {
@@ -158,14 +155,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mToolbar.setOnMenuItemClickListener(mOnMenuItemClickListener);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        //以下两行代码是如何获取navigationView中子view的方式
+        View headerView = mNavigationView.getHeaderView(0);
+        textViewLogin = (TextView) headerView.findViewById(R.id.tv_login);
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
         mCircleImageView = (CircleImageView) findViewById(R.id.icon_image);
-        //mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
-        //GridLayoutManager layoutManager = new GridLayoutManager(this,2);
-        //mRecyclerView.setLayoutManager(layoutManager);
-        //mAdapter = new RecyclerViewCardAdapter(this,mImageCardList);
-        //mRecyclerView.setAdapter(mAdapter);
+        mFilter = new IntentFilter();
+        mFilter.addAction("com.songchao.mybilibili.notifilogin");
+        mNotifyLoginUIReceiver = new NotifyLoginUIReceiver();
+        registerReceiver(mNotifyLoginUIReceiver,mFilter);
+        //应该把SharedPreferences封装为一个工具类，这样会减少很多重复代码
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
@@ -232,5 +233,19 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+    //广播接收器
+    public class NotifyLoginUIReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            textViewLogin.setText("已登录");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mNotifyLoginUIReceiver);
     }
 }
