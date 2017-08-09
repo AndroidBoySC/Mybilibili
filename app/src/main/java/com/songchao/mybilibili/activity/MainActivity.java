@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private IntentFilter mFilter;
     private MainActivity.NotifyLoginUIReceiver mNotifyLoginUIReceiver;
     private SharedPreferences mPreferences;
+    private Boolean isLogin = false;
     //取数据时不用editor
     //private SharedPreferences.Editor mEditor;
 
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         setContentView(R.layout.activity_main);
         initView();
         initData();
+        String name = mPreferences.getString("userName", "0");
+        String passWord = mPreferences.getString("passWord", "0");
+        isLogin = mPreferences.getBoolean("isLogin", false);
+        if(isLogin){
+            textViewLogin.setText("已登录");
+        }
         //隐藏Actionbar
         //mActionBar = getSupportActionBar();
         //mActionBar.hide();
@@ -143,7 +150,17 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 //            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
 //            startActivity(intent);
 //        }
-
+        String name = mPreferences.getString("userName", "0");
+        String passWord = mPreferences.getString("passWord", "0");
+        isLogin = mPreferences.getBoolean("isLogin", false);
+       if(isLogin){
+            //打个吐司测试一下，实际上要做选取图片或拍照的操作
+            Toast.makeText(MainActivity.this,"你已经登陆了",Toast.LENGTH_SHORT).show();
+            //textViewLogin.setText("已登录");
+        }else {
+           Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+           startActivity(intent);
+       }
     }
 
     private void initView() {
