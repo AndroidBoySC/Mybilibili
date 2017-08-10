@@ -35,7 +35,7 @@
         </activity>
         <activity android:name=".activity.ShoucangActivity">
         </activity>
-        <activity android:name=".activity.ShaohouActivity">
+        <activity android:name=".activity.OutLoginActivity">
         </activity>
         <activity android:name=".activity.HuiyuanActivity">
         </activity>

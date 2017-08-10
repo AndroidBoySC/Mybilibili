@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.songchao.mybilibili.R;
 
-public class ShaohouActivity extends AppCompatActivity {
+public class OutLoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

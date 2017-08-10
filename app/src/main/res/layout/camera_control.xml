@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#ffffff"
+              android:gravity="center"
+              android:paddingTop="46dp"
+              android:paddingBottom="43dp"
+              android:paddingLeft="22.5dp"
+              android:paddingRight="22.5dp">
+    <!--这里包括APP内的很多背景色颜色值还有其他的一些属性值可以封装到color或style中等等-->
+    <Button
+        android:id="@+id/btn_camera"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@drawable/button_shape"
+        android:text="拍照"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/btn_photo"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_shape"
+        android:text="从相册中选择"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_shape"
+        android:text="取消"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:gravity="center"/>
+
+</LinearLayout>

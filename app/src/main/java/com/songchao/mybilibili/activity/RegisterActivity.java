@@ -15,8 +15,6 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout userName,passWord;
     private Button registerButton;
     private ImageView backImageView;
-//    private SharedPreferences mPreferences;
-//    private SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
 //        final String textUserName = userName.getEditText().getText().toString().trim();
 //        final String textPassWord = passWord.getEditText().getText().toString().trim();
         registerButton = (Button) findViewById(R.id.register_success);
-//        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        String name = mPreferences.getString("userName", textUserName);
-//        String pass = mPreferences.getString("passWord",textPassWord);
-//        mEditor = mPreferences.edit();
-//        mEditor.putString("username",name);
-//        mEditor.putString("password",pass);
-//        mEditor.apply();
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

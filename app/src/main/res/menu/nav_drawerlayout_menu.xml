@@ -20,10 +20,10 @@
             android:id="@+id/nav_shoucang"
             android:icon="@mipmap/shoucang"
             android:title="我的收藏"/>
-        <item
-            android:id="@+id/nav_shaohou"
-            android:icon="@mipmap/shaohou"
-            android:title="稍后再看"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_shaohou"-->
+            <!--android:icon="@mipmap/shaohou"-->
+            <!--android:title="稍后再看"/>-->
         <item
             android:id="@+id/nav_huiyuan"
             android:icon="@mipmap/huiyuan"
@@ -43,6 +43,10 @@
             android:id="@+id/nav_night"
             android:icon="@mipmap/night"
             android:title="夜间"/>
+        <item
+            android:id="@+id/out_login"
+            android:icon="@mipmap/outlogin"
+            android:title="退出登录"/>
 
     </group>
 

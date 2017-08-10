@@ -1,5 +1,6 @@
 package com.songchao.mybilibili.activity;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +17,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private MainActivity.NotifyLoginUIReceiver mNotifyLoginUIReceiver;
     private SharedPreferences mPreferences;
     private Boolean isLogin = false;
+    private Dialog mCameraDialog;
     //取数据时不用editor
     //private SharedPreferences.Editor mEditor;
 
@@ -63,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         String name = mPreferences.getString("userName", "0");
         String passWord = mPreferences.getString("passWord", "0");
         isLogin = mPreferences.getBoolean("isLogin", false);
+        //判断是否登录状态已经登录了再次进入程序依旧会显示已登录
         if(isLogin){
             textViewLogin.setText("已登录");
         }
@@ -117,10 +125,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         Intent intent2 = new Intent(MainActivity.this,ShoucangActivity.class);
                         startActivity(intent2);
                         break;
-                    case R.id.nav_shaohou:
-                        Intent intent3 = new Intent(MainActivity.this,ShaohouActivity.class);
-                        startActivity(intent3);
-                        break;
                     case R.id.nav_huiyuan:
                         Intent intent4 = new Intent(MainActivity.this,HuiyuanActivity.class);
                         startActivity(intent4);
@@ -137,6 +141,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         Intent intent7 = new Intent(MainActivity.this,NightActivity.class);
                         startActivity(intent7);
                         break;
+                    case R.id.out_login:
+                        Intent intent3 = new Intent(MainActivity.this,OutLoginActivity.class);
+                        startActivity(intent3);
+                        break;
                     default:
                         break;
                 }
@@ -146,17 +154,36 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     }
     public void Login(View view){
-//        if(view != null){
-//            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-//            startActivity(intent);
-//        }
+        //通过存储在本地的用户信息及登录状态判断所要打开的页面
         String name = mPreferences.getString("userName", "0");
         String passWord = mPreferences.getString("passWord", "0");
         isLogin = mPreferences.getBoolean("isLogin", false);
        if(isLogin){
             //打个吐司测试一下，实际上要做选取图片或拍照的操作
-            Toast.makeText(MainActivity.this,"你已经登陆了",Toast.LENGTH_SHORT).show();
-            //textViewLogin.setText("已登录");
+            //Toast.makeText(MainActivity.this,"你已经登陆了",Toast.LENGTH_SHORT).show();
+            //textViewLogin.setText("已登录");这句写在这里是有问题的，应该写在onCreate方法中
+           mCameraDialog = new Dialog(MainActivity.this,R.style.my_dialog);
+           LinearLayout root = (LinearLayout) LayoutInflater.from(MainActivity.this).inflate(R.layout.camera_control,null);
+           root.findViewById(R.id.btn_camera).setOnClickListener(btnListener);
+           root.findViewById(R.id.btn_photo).setOnClickListener(btnListener);
+           root.findViewById(R.id.btn_cancel).setOnClickListener(btnListener);
+           //将dialog布局通过setcontentview填充
+           mCameraDialog.setContentView(root);
+           Window dialogWindow = mCameraDialog.getWindow();
+           dialogWindow.setGravity(Gravity.BOTTOM);
+           //有个滑出的动画，对高度进行设置，不让他全屏
+           dialogWindow.setWindowAnimations(R.style.dialogstyle);
+           WindowManager.LayoutParams lp = dialogWindow.getAttributes();//获取对话框当前的参数值
+           lp.x = 0; // 新位置X坐标
+           lp.y = -20; // 新位置Y坐标
+           lp.width =(int)getResources().getDisplayMetrics().widthPixels;// 宽度  
+//      lp.height = WindowManager.LayoutParams.WRAP_CONTENT;//高度
+//     lp.alpha = 9f; //透明度
+           root.measure(0,0);
+           lp.height = root.getMeasuredHeight();
+           lp.alpha = 9f; // 透明度  
+           dialogWindow.setAttributes(lp);
+           mCameraDialog.show();
         }else {
            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
            startActivity(intent);
@@ -191,6 +218,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         getMenuInflater().inflate(R.menu.menu_tool,menu);
         return true;
     }
+
+    /**
+     * toolbar上item点击事件的逻辑处理方法
+     */
     private Toolbar.OnMenuItemClickListener mOnMenuItemClickListener = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -213,7 +244,37 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         }
     };
 
+    /**
+     * 选择头像时底部的对话框选择点击事件
+     */
+    private View.OnClickListener btnListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                //通过shape使button圆角化
+                case R.id.btn_camera:
 
+                    break;
+                case R.id.btn_photo:
+
+                    break;
+                case R.id.btn_cancel:
+                    if(mCameraDialog != null){
+                        mCameraDialog.dismiss();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    };
+
+    /**
+     * 侧滑菜单导航按钮点击事件
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -226,6 +287,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         return true;
     }
 
+    /**
+     * 再按一次返回键退出程序
+     */
     @Override
     public void onBackPressed() {
         if(new Date().getTime() - lastPressTime <2000){
@@ -236,6 +300,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         }
     }
 
+    /**
+     * 以下3个方法为tablayout与viewpager联动的回调方法
+     * @param tab
+     */
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
