@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -17,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +41,7 @@ import com.songchao.mybilibili.fragment.TuiJianFragment;
 import com.songchao.mybilibili.fragment.ZhiBoFragment;
 import com.songchao.mybilibili.fragment.ZhuiFanFragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +63,15 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private SharedPreferences mPreferences;
     private Boolean isLogin = false;
     private Dialog mCameraDialog;
+    //头像文件
+    private static final String IMAGE_FILE_NAME = "head_image.jpg";
+    //请求识别码
+    private static final int CODE_GALLERY_REQUEST = 0xa0;
+    private static final int CODE_CAMERA_REQUEST = 0xa1;
+    private static final int CODE_RESULT_REQUEST = 0xa2;
+    //裁剪后的图片的宽x和高y
+    private static int output_X = 100;
+    private static int output_Y = 100;
     //取数据时不用editor
     //private SharedPreferences.Editor mEditor;
 
@@ -204,7 +219,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         textViewLogin = (TextView) headerView.findViewById(R.id.tv_login);
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
-        mCircleImageView = (CircleImageView) findViewById(R.id.icon_image);
+
+        mCircleImageView = (CircleImageView) headerView.findViewById(R.id.icon_image);
+
         mFilter = new IntentFilter();
         mFilter.addAction("com.songchao.mybilibili.notifilogin");
         mNotifyLoginUIReceiver = new NotifyLoginUIReceiver();
@@ -253,10 +270,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             switch (view.getId()){
                 //通过shape使button圆角化
                 case R.id.btn_camera:
-
+                    choseHeadImageFromCameraCapture();
                     break;
                 case R.id.btn_photo:
-
+                    choseHeadImageFromGallery();
                     break;
                 case R.id.btn_cancel:
                     if(mCameraDialog != null){
@@ -269,6 +286,110 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         }
     };
+
+    /**
+     * 从手机相机拍摄图片设置用户头像
+     */
+    private void choseHeadImageFromCameraCapture() {
+        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //判断存储卡是否可用，存储照片文件
+        if(hasSdcard()){
+            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Environment.getExternalStorageDirectory(),IMAGE_FILE_NAME)));
+            }
+        startActivityForResult(intentFromCapture,CODE_CAMERA_REQUEST);
+    }
+
+    /**
+     * 从手机相册选择图片设置用户头像
+     */
+    private void choseHeadImageFromGallery() {
+        Intent intentFromGallery = new Intent();
+        //设置文件类型
+        intentFromGallery.setType("image/*");
+        intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intentFromGallery,CODE_GALLERY_REQUEST);
+    }
+
+    /**
+     * 处理拍照后及相册选中的图片
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        //用户没有进行有效的设置操作，返回
+        if(resultCode == RESULT_CANCELED){
+            Toast.makeText(getApplication(),"取消",Toast.LENGTH_LONG).show();
+            return;
+            }
+        switch(requestCode){
+            case CODE_GALLERY_REQUEST:
+            cropRawPhoto(intent.getData());
+            break;
+            case CODE_CAMERA_REQUEST:
+            if(hasSdcard()){
+                File tempFile = new File(
+                        Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME);
+                cropRawPhoto(Uri.fromFile(tempFile));
+                }else{
+                Toast.makeText(getApplication(),"没有SDCard!",Toast.LENGTH_LONG).show();
+                }
+            break;
+            case CODE_RESULT_REQUEST:
+                Log.d("Photo","CODE_RESULT_REQUEST....");
+            if(intent != null){
+                setImageToHeadView(intent);
+                }
+            break;
+            }
+
+    }
+
+    /**  
+      * 裁剪原始的图片  
+      */
+    public void cropRawPhoto(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri,"image/*");
+        //设置裁剪
+        intent.putExtra("crop","true");
+        //aspectX,aspectY:宽高的比例
+        intent.putExtra("aspectX",1);
+        intent.putExtra("aspectY",1);
+        //outputX,outputY:裁剪图片宽高
+        intent.putExtra("outputX",output_X);
+        intent.putExtra("outputY",output_Y);
+        intent.putExtra("return-data",true);
+        startActivityForResult(intent,CODE_RESULT_REQUEST);
+        Log.d("Photo","cropRawPhoto....");
+        }
+    /**  
+     *提取保存裁剪之后的图片数据，并设置头像部分的View  
+     */
+    private void setImageToHeadView(Intent intent){
+
+        Bundle extras = intent.getExtras();
+        if(extras != null){
+            Bitmap photo = extras.getParcelable("data");
+            Log.d("Photo","CODE_RESULT_REQUEST...." + photo);
+            mCircleImageView.setImageBitmap(photo);
+
+            }
+        }
+    /** 
+     *检查设备是否存在SDCard的工具方法 
+     */
+    public static boolean hasSdcard() {
+        String state = Environment.getExternalStorageState();
+        if(state.equals(Environment.MEDIA_MOUNTED)){
+            //有存储的SDCard
+            return true;
+            }else{
+            return false;
+            }
+        }
 
     /**
      * 侧滑菜单导航按钮点击事件
