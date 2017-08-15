@@ -10,6 +10,7 @@ public class ImageCard {
     private String name;
     private int imgId;
 
+
     public ImageCard(String name, int imgId) {
         this.name = name;
         this.imgId = imgId;

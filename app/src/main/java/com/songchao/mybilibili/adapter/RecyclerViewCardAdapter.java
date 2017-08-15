@@ -2,6 +2,7 @@ package com.songchao.mybilibili.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,74 +23,119 @@ import java.util.List;
  */
 
 public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCardAdapter.MyViewHolder>{
-//    public static final int TYPE_HEADER = 0;
-//    public static final int TYPE_CARD = 1;
-//    private View mHeaderView;
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_NORMAL = 1;
+    private View mHeaderView;
     private Context mContext;
     private List<ImageCard> mImageCardList;
+    public OnItemClickListener mListener;
 
-//    public void setHeaderView(View headerView) {
-//        mHeaderView = headerView;
-//    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public View getHeaderView() {
+        return mHeaderView;
+    }
+
+    public void setHeaderView(View headerView) {
+        mHeaderView = headerView;
+        //
+        notifyItemInserted(0);
+    }
+
+    public void addDatas(List<ImageCard> datas){
+        mImageCardList.addAll(datas);
+        notifyDataSetChanged();
+    }
 
     public RecyclerViewCardAdapter(Context context, List<ImageCard> imageCardList) {
         mContext = context;
         mImageCardList = imageCardList;
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        if(mHeaderView == null) return TYPE_CARD;
-//        if(position == 0) return TYPE_HEADER;
-//        return TYPE_CARD;
-//    }
+    @Override
+    public int getItemViewType(int position) {
+        if(mHeaderView == null) return TYPE_NORMAL;
+        if(position == 0) return TYPE_HEADER;
+        return TYPE_NORMAL;
+    }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if(mHeaderView != null && viewType == TYPE_HEADER){
-//            return new MyViewHolder(mHeaderView);
+//        if(mContext == null){
+//            mContext = parent.getContext();
 //        }
 //        View view = LayoutInflater.from(mContext).inflate(R.layout.imagecard_item,parent,false);
 //        return new MyViewHolder(view);
-        if(mContext == null){
-            mContext = parent.getContext();
-        }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.imagecard_item,parent,false);
-        return new MyViewHolder(view);
+        if(mHeaderView != null && viewType == TYPE_HEADER) return new MyViewHolder(mHeaderView);
+        View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagecard_item,parent,false);
+        return new MyViewHolder(layout);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-//        if(getItemViewType(position) == TYPE_HEADER) return;
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 //        ImageCard imageCard = mImageCardList.get(position);
 //        holder.mTextView.setText(imageCard.getName());
 //        Glide.with(mContext).load(imageCard.getImgId()).into(holder.mImageView);
-        ImageCard imageCard = mImageCardList.get(position);
-        holder.mTextView.setText(imageCard.getName());
-        Glide.with(mContext).load(imageCard.getImgId()).into(holder.mImageView);
+        if(getItemViewType(position) == TYPE_HEADER) return;
+        final int pos = getRealPosition(holder);
+        final ImageCard data = mImageCardList.get(pos);
+        if(holder instanceof MyViewHolder){
+            //holder.mCardView.setTag("tag");
+            holder.mTextView.setText(data.getName());
+            Glide.with(mContext).load(data.getImgId()).into(holder.mImageView);
+            if(mListener == null) return;
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //
+                    //mListener.onItemClick(pos,data);
+                }
+            });
+        }
 
     }
-//    private int getRealPosition(RecyclerView.ViewHolder holder){
-//        int position = holder.getLayoutPosition();
-//        return mHeaderView == null?position:position-1;
-//    }
+    private int getRealPosition(RecyclerView.ViewHolder holder){
+        int position = holder.getLayoutPosition();
+        return mHeaderView == null?position:position-1;
+    }
 
     @Override
     public int getItemCount() {
-        //return mHeaderView == null?mImageCardList.size():mImageCardList.size()+1;
-        return mImageCardList.size();
+        return mHeaderView == null?mImageCardList.size():mImageCardList.size()+1;
+        //return mImageCardList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         CardView mCardView;
         ImageView mImageView;
         TextView mTextView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            if(itemView == mHeaderView) return;
             mCardView = (CardView) itemView;
             mImageView = (ImageView) itemView.findViewById(R.id.card_image);
             mTextView = (TextView) itemView.findViewById(R.id.card_text);
+        }
+    }
+    interface OnItemClickListener{
+        void onItemClick(int position,ImageCard data);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if(manager instanceof GridLayoutManager){
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) manager;
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return getItemViewType(position) == TYPE_HEADER?gridLayoutManager.getSpanCount():1;
+                }
+            });
         }
     }
 }

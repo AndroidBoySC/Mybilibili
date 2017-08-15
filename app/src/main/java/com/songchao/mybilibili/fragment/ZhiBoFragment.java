@@ -10,14 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.songchao.mybilibili.APP;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.adapter.RecyclerViewCardAdapter;
 import com.songchao.mybilibili.model.ImageCard;
-import com.songchao.mybilibili.util.GlideImageLoader;
 import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.transformer.CubeOutTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +44,11 @@ public class ZhiBoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_zhi_bo,container,false);
-        View header = LayoutInflater.from(getActivity()).inflate(R.layout.header,null);
+        //View header = LayoutInflater.from(getActivity()).inflate(R.layout.header,null);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_zhibo);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swip_zhibo);
-        mBanner = (Banner) header.findViewById(R.id.banner);
-        mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H/5));
+        //mBanner = (Banner) header.findViewById(R.id.banner);
+        //mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H/5));
         mImageCardList.clear();
         for (int i = 0; i < 30; i++) {
             Random random = new Random();
@@ -64,13 +60,28 @@ public class ZhiBoFragment extends Fragment {
         mAdapter = new RecyclerViewCardAdapter(getActivity(),mImageCardList);
         //mAdapter.setHeaderView(mBanner);
         mRecyclerView.setAdapter(mAdapter);
+        setHeader(mRecyclerView);
+//        mAdapter.setOnItemClickListener(new RecyclerViewCardAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position, ImageCard data) {
+//
+//            }
+//        });
+
+
+
         //initListener();
-        mBanner.setImages(APP.images)
-                .setBannerAnimation(CubeOutTransformer.class)
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE)
-                .setImageLoader(new GlideImageLoader())
-                .start();
+//        mBanner.setImages(APP.images)
+//                .setBannerAnimation(CubeOutTransformer.class)
+//                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE)
+//                .setImageLoader(new GlideImageLoader())
+//                .start();
         return view;
+    }
+    private void setHeader(RecyclerView view){
+        //View header = LayoutInflater.from(getActivity()).inflate(R.layout.view,false);
+        View header = LayoutInflater.from(getActivity()).inflate(R.layout.header,view,false);
+        mAdapter.setHeaderView(header);
     }
 
 //    private void initListener() {
