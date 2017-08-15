@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         userNameWraper.setHint("用户名");
         passwordWraper.setHint("密码");
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         mEditor = mPreferences.edit();
         loginButton = (Button) findViewById(R.id.login);
 
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                             //这块值直接写isLogin就可以，因为之前已经赋值为true，直接写true isLogin就是灰色的，不会用到
                             mEditor.putBoolean("isLogin",isLogin);
                             mEditor.apply();
+                            Log.d("Photo","isLogin:"+ mPreferences.getBoolean("isLogin",false));
                             //mEditor.commit();
                             Intent intent = new Intent("com.songchao.mybilibili.notifilogin");
                             sendBroadcast(intent);

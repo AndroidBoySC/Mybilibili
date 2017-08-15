@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private IntentFilter mFilter;
     private MainActivity.NotifyLoginUIReceiver mNotifyLoginUIReceiver;
     private SharedPreferences mPreferences;
-    private Boolean isLogin = false;
+    private Boolean isLogin;
     private Dialog mCameraDialog;
     //头像文件
     private static final String IMAGE_FILE_NAME = "head_image.jpg";
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private static int output_X = 100;
     private static int output_Y = 100;
     //取数据时不用editor
-    //private SharedPreferences.Editor mEditor;
+    private SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +86,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         String name = mPreferences.getString("userName", "0");
         String passWord = mPreferences.getString("passWord", "0");
         isLogin = mPreferences.getBoolean("isLogin", false);
-        //判断是否登录状态已经登录了再次进入程序依旧会显示已登录
-        if(isLogin){
+        Log.d("Photo","isLogin:"+ isLogin);
+        //判断是否登录状态已经登录了再次进入程序依旧会显示已登录未登录显示点击用户头像登录
+        if(isLogin == true){
             textViewLogin.setText("已登录");
+        }else {
+            textViewLogin.setText("点击用户头像登录");
         }
-        //隐藏Actionbar
+        //隐藏ActionbarLo
         //mActionBar = getSupportActionBar();
         //mActionBar.hide();
     }
@@ -157,8 +161,23 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         startActivity(intent7);
                         break;
                     case R.id.out_login:
-                        Intent intent3 = new Intent(MainActivity.this,OutLoginActivity.class);
-                        startActivity(intent3);
+//                        Intent intent3 = new Intent(MainActivity.this,OutLoginActivity.class);
+//                        startActivity(intent3);
+                        mDrawerLayout.closeDrawers();
+                        //在菜单布局中使用snackbar第一个view参数填菜单的父容器view即可
+                        Snackbar.make(mNavigationView,"确定不是手滑吗",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Toast.makeText(MainActivity.this,"已退出",Toast.LENGTH_SHORT).show();
+                                Intent intent3 = new Intent("com.songchao.mybilibili.notifiout");
+                                sendBroadcast(intent3);
+                                isLogin = false;
+                                //要重新再存一次，否则取不到
+                                mEditor.putBoolean("isLogin",isLogin);
+                                //必须提交，忘提交不会有效果
+                                mEditor.apply();
+                            }
+                        }).show();
                         break;
                     default:
                         break;
@@ -168,10 +187,16 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
 
     }
+
+    /**
+     * 点击头像后的操作
+     * @param view
+     */
     public void Login(View view){
         //通过存储在本地的用户信息及登录状态判断所要打开的页面
-        String name = mPreferences.getString("userName", "0");
-        String passWord = mPreferences.getString("passWord", "0");
+//        String name = mPreferences.getString("userName", "0");
+//        String passWord = mPreferences.getString("passWord", "0");
+        //这块必须要再取一次，否则由未登录转为登录时isLogin值还是false
         isLogin = mPreferences.getBoolean("isLogin", false);
        if(isLogin){
             //打个吐司测试一下，实际上要做选取图片或拍照的操作
@@ -219,15 +244,15 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         textViewLogin = (TextView) headerView.findViewById(R.id.tv_login);
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
-
         mCircleImageView = (CircleImageView) headerView.findViewById(R.id.icon_image);
-
         mFilter = new IntentFilter();
         mFilter.addAction("com.songchao.mybilibili.notifilogin");
+        mFilter.addAction("com.songchao.mybilibili.notifiout");
         mNotifyLoginUIReceiver = new NotifyLoginUIReceiver();
         registerReceiver(mNotifyLoginUIReceiver,mFilter);
         //应该把SharedPreferences封装为一个工具类，这样会减少很多重复代码
         mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
     }
 
     @Override
@@ -271,9 +296,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 //通过shape使button圆角化
                 case R.id.btn_camera:
                     choseHeadImageFromCameraCapture();
+                    mCameraDialog.dismiss();
                     break;
                 case R.id.btn_photo:
                     choseHeadImageFromGallery();
+                    mCameraDialog.dismiss();
                     break;
                 case R.id.btn_cancel:
                     if(mCameraDialog != null){
@@ -344,11 +371,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 }
             break;
             }
-
     }
 
     /**  
-      * 裁剪原始的图片  
+      * 裁剪原始的图片
       */
     public void cropRawPhoto(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -366,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         Log.d("Photo","cropRawPhoto....");
         }
     /**  
-     *提取保存裁剪之后的图片数据，并设置头像部分的View  
+     *提取保存裁剪之后的图片数据，并设置头像部分的View
      */
     private void setImageToHeadView(Intent intent){
 
@@ -375,11 +401,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             Bitmap photo = extras.getParcelable("data");
             Log.d("Photo","CODE_RESULT_REQUEST...." + photo);
             mCircleImageView.setImageBitmap(photo);
-
             }
         }
     /** 
-     *检查设备是否存在SDCard的工具方法 
+     *检查设备是否存在SDCard的工具方法
      */
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
@@ -445,7 +470,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            textViewLogin.setText("已登录");
+            String action = intent.getAction();
+            if(action.equals("com.songchao.mybilibili.notifilogin")){
+                textViewLogin.setText("已登录");
+            }else if(action.equals("com.songchao.mybilibili.notifiout")){
+                textViewLogin.setText("点击头像登录");
+            }
+
         }
     }
 
