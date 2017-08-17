@@ -3,6 +3,10 @@ package com.songchao.mybilibili;
 import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
+
+import com.songchao.mybilibili.activity.MainActivity;
+import com.zxy.recovery.core.Recovery;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,17 +33,18 @@ public class APP extends Application{
     private void initBanner() {
         H = getScreenH(this);
 
-//        Recovery.getInstance()
-//                .debug(true)
-//                .recoverInBackground(false)
-//                .recoverStack(true)
-//                .mainPage(MainActivity.class)
-//                .init(this);
+        Recovery.getInstance()
+                .debug(true)
+                .recoverInBackground(false)
+                .recoverStack(true)
+                .mainPage(MainActivity.class)
+                .init(this);
 
         String[] urls = getResources().getStringArray(R.array.url4);
         String[] tips = getResources().getStringArray(R.array.title);
         List list = Arrays.asList(urls);
         images = new ArrayList<>(list);
+        Log.d("Photo","images.size:" + images.size());
         titles= Arrays.asList(tips);
     }
 

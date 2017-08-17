@@ -26,6 +26,8 @@ public class ViewPagerAdapter extends PagerAdapter{
     @Override
     public int getCount() {
         return mImageViews.size();
+        //无限循环
+        //return Integer.MAX_VALUE;,这样会出现越界的异常
     }
 
     @Override

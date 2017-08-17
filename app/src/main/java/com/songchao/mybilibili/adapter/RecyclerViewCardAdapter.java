@@ -28,30 +28,17 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
     private View mHeaderView;
     private Context mContext;
     private List<ImageCard> mImageCardList;
-    public OnItemClickListener mListener;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
-    public View getHeaderView() {
-        return mHeaderView;
-    }
-
-    public void setHeaderView(View headerView) {
-        mHeaderView = headerView;
-        //
-        notifyItemInserted(0);
-    }
-
-    public void addDatas(List<ImageCard> datas){
-        mImageCardList.addAll(datas);
-        notifyDataSetChanged();
-    }
 
     public RecyclerViewCardAdapter(Context context, List<ImageCard> imageCardList) {
         mContext = context;
         mImageCardList = imageCardList;
+    }
+
+
+    public void setHeaderView(View headerView) {
+        mHeaderView = headerView;
+        //
+        //notifyItemInserted(0);
     }
 
     @Override
@@ -63,21 +50,13 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if(mContext == null){
-//            mContext = parent.getContext();
-//        }
-//        View view = LayoutInflater.from(mContext).inflate(R.layout.imagecard_item,parent,false);
-//        return new MyViewHolder(view);
         if(mHeaderView != null && viewType == TYPE_HEADER) return new MyViewHolder(mHeaderView);
         View layout = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagecard_item,parent,false);
         return new MyViewHolder(layout);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-//        ImageCard imageCard = mImageCardList.get(position);
-//        holder.mTextView.setText(imageCard.getName());
-//        Glide.with(mContext).load(imageCard.getImgId()).into(holder.mImageView);
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         if(getItemViewType(position) == TYPE_HEADER) return;
         final int pos = getRealPosition(holder);
         final ImageCard data = mImageCardList.get(pos);
@@ -85,14 +64,7 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
             //holder.mCardView.setTag("tag");
             holder.mTextView.setText(data.getName());
             Glide.with(mContext).load(data.getImgId()).into(holder.mImageView);
-            if(mListener == null) return;
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //
-                    //mListener.onItemClick(pos,data);
-                }
-            });
+
         }
 
     }
@@ -119,9 +91,6 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
             mImageView = (ImageView) itemView.findViewById(R.id.card_image);
             mTextView = (TextView) itemView.findViewById(R.id.card_text);
         }
-    }
-    interface OnItemClickListener{
-        void onItemClick(int position,ImageCard data);
     }
 
     @Override

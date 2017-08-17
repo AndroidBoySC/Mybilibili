@@ -1,6 +1,7 @@
 package com.songchao.mybilibili.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +16,8 @@ import com.youth.banner.loader.ImageLoader;
 public class GlideImageLoader extends ImageLoader{
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
+        Log.d("Photo","path:" + path);
+        Log.d("Photo","imageView:" + imageView);
         Glide.with(context).load(path).into(imageView);
     }
 }
