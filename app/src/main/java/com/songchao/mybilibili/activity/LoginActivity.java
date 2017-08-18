@@ -1,11 +1,17 @@
 package com.songchao.mybilibili.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,18 +24,23 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView mImageView;
     private TextInputLayout userNameWraper;
     private TextInputLayout passwordWraper;
-    private Button loginButton,registerButton;
+    private Button loginButton;
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
     //是否登录的状态值
     private Boolean isLogin = false;
+    private CardView cv;
+    private FloatingActionButton fab;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        cv = (CardView) findViewById(R.id.cv);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         mImageView = (ImageView) findViewById(R.id.back_title);
+        //左上角返回键
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,15 +56,28 @@ public class LoginActivity extends AppCompatActivity {
         mEditor = mPreferences.edit();
         loginButton = (Button) findViewById(R.id.login);
 
-        registerButton = (Button) findViewById(R.id.register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        //registerButton = (Button) findViewById(R.id.register);
+        //通过悬浮按钮跳转至注册界面
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivityForResult(intent,1);
+//                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+//                startActivityForResult(intent,1);
+                getWindow().setExitTransition(null);
+                getWindow().setEnterTransition(null);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options =
+                            ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, fab, fab.getTransitionName());
+                    startActivityForResult(new Intent(LoginActivity.this, RegisterActivity.class),1, options.toBundle());
+                } else {
+                    startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                }
             }
         });
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -65,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         if(userNameWraper.getEditText().getText().toString().trim().equals(username)&&
                                 passwordWraper.getEditText().getText().toString().trim().equals(password)){
                             Log.d("登录界面输入用户名", userNameWraper.getEditText().getText().toString().trim());
@@ -86,7 +111,15 @@ public class LoginActivity extends AppCompatActivity {
                             //mEditor.commit();
                             Intent intent = new Intent("com.songchao.mybilibili.notifilogin");
                             sendBroadcast(intent);
-                            finish();
+                            Explode explode = new Explode();
+                            explode.setDuration(500);
+
+                            getWindow().setExitTransition(explode);
+                            getWindow().setEnterTransition(explode);
+                            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this);
+                            Intent i2 = new Intent(LoginActivity.this,MainActivity.class);
+                            startActivity(i2, oc2.toBundle());
+                            //finish();
                             // TODO: 2017/8/8 后期可以添加广播更新主界面为已登录并提示用户可设置头像
                         }else {
                             Log.d("登录界面输入用户名", userNameWraper.getEditText().getText().toString().trim());
@@ -98,6 +131,8 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 }
 

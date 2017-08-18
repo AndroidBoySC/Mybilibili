@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:gravity="center"
-              android:layout_width="match_parent"
-                android:background="@color/cardview_dark_background"
-              android:layout_height="160dp">
+<com.youth.banner.Banner
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/banner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:indicator_drawable_selected="@color/colorAccent"
+    app:indicator_drawable_unselected="@android:color/white"
+    app:indicator_height="4dp"
+    app:indicator_margin="4dp"
+    app:indicator_width="20dp"/>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                              <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+              <!--android:orientation="vertical"-->
+              <!--android:gravity="center"-->
+              <!--android:layout_width="match_parent"-->
+                <!--android:background="@color/cardview_dark_background"-->
+              <!--android:layout_height="160dp">-->
 
     <!--<FrameLayout-->
         <!--android:layout_width="match_parent"-->
@@ -72,14 +83,5 @@
 
         <!--</LinearLayout>-->
     <!--</FrameLayout>-->
-    <com.youth.banner.Banner
 
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        app:indicator_drawable_selected="@color/colorAccent"
-        app:indicator_drawable_unselected="@android:color/white"
-        app:indicator_height="4dp"
-        app:indicator_margin="4dp"
-        app:indicator_width="20dp"/>
-</RelativeLayout>
+<!--</RelativeLayout>-->

@@ -32,7 +32,6 @@ public class APP extends Application{
 
     private void initBanner() {
         H = getScreenH(this);
-
         Recovery.getInstance()
                 .debug(true)
                 .recoverInBackground(false)

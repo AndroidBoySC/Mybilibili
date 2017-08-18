@@ -22,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -81,6 +82,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        //有动画效果
+        Explode explode = new Explode();
+        explode.setDuration(500);
+        getWindow().setExitTransition(explode);
+        getWindow().setEnterTransition(explode);
+
+
         initView();
         initData();
         String name = mPreferences.getString("userName", "0");

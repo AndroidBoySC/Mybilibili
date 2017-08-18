@@ -96,7 +96,7 @@ public class ZhiBoFragment extends Fragment {
             mImageCardList.add(mImageCards[index]);
         }
 
-//        mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H / 4));
+        mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H / 4));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new RecyclerViewCardAdapter(getActivity(),mImageCardList);
