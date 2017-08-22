@@ -34,5 +34,19 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.zxy.android:recovery:0.0.8'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
+    compile files('libs/MobCommons-2017.0801.1522.jar')
+    compile files('libs/MobTools-2017.0801.1522.jar')
+    compile files('libs/ShareSDK-Core-3.0.1.jar')
+    compile files('libs/ShareSDK-Email-3.0.1.jar')
+    compile files('libs/ShareSDK-Facebook-3.0.1.jar')
+    compile files('libs/ShareSDK-QQ-3.0.1.jar')
+    compile files('libs/ShareSDK-QZone-3.0.1.jar')
+    compile files('libs/ShareSDK-ShortMessage-3.0.1.jar')
+    compile files('libs/ShareSDK-SinaWeibo-3.0.1.jar')
+    compile files('libs/ShareSDK-TencentWeibo-3.0.1.jar')
+    compile files('libs/ShareSDK-Twitter-3.0.1.jar')
+    compile files('libs/ShareSDK-Wechat-3.0.1.jar')
+    compile files('libs/ShareSDK-Wechat-Core-3.0.1.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-3.0.1.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-3.0.1.jar')
 }

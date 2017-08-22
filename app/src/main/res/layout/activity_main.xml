@@ -30,9 +30,11 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_scrollFlags="scroll|enterAlways|snap">
                 <TextView
+                    android:id="@+id/share_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="未登录"
+                    android:text="分享"
+                    android:clickable="true"
                     android:textColor="#fff"
                     android:textSize="18sp"/>
             </android.support.v7.widget.Toolbar>

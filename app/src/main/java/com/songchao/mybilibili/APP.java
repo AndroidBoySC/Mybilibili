@@ -1,10 +1,10 @@
 package com.songchao.mybilibili;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.mob.MobApplication;
 import com.songchao.mybilibili.activity.MainActivity;
 import com.zxy.recovery.core.Recovery;
 
@@ -18,7 +18,8 @@ import java.util.List;
  * Email: 15704762346@163.com
  */
 
-public class APP extends Application{
+public class APP extends MobApplication{
+    //正常情况下继承Application即可，但要集成三方分享就要继承MobApplication
     public static int H;
     public static List<?> images=new ArrayList<>();
     public static List<String> titles=new ArrayList<>();
