@@ -1,6 +1,7 @@
 package com.songchao.mybilibili.adapter;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,8 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.config.NetConfig;
+import com.songchao.mybilibili.db.MySaveDatabaseHelper;
 import com.songchao.mybilibili.model.TuiJian;
-import com.songchao.mybilibili.util.ItemTouchHelperAdapter;
 
 import java.util.List;
 
@@ -21,15 +22,20 @@ import java.util.List;
  * Author: SongCHao
  * Date: 2017/8/25/16:47
  * Email: 15704762346@163.com
+ * 这里以第一种实现不带按钮删除item的时候要实现ItemTouchHelperAdapter接口
  */
 
-public class ShouCangAdapter extends RecyclerView.Adapter<ShouCangAdapter.MyShouCangViewHolder> implements ItemTouchHelperAdapter{
+public class ShouCangAdapter extends RecyclerView.Adapter<ShouCangAdapter.MyShouCangViewHolder>{
     private List<TuiJian> mTuiJianList;
     private Context mContext;
+    private MySaveDatabaseHelper mHelper;
 
-    public ShouCangAdapter(List<TuiJian> tuiJianList, Context context) {
+    public ShouCangAdapter(List<TuiJian> tuiJianList, Context context,MySaveDatabaseHelper helper) {
         mTuiJianList = tuiJianList;
         mContext = context;
+        mHelper = helper;
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,1);
+        mHelper.getWritableDatabase();
     }
 
     @Override
@@ -64,18 +70,20 @@ public class ShouCangAdapter extends RecyclerView.Adapter<ShouCangAdapter.MyShou
         return mTuiJianList==null?0:mTuiJianList.size();
     }
 
-    @Override
-    public void onItemMove(int fromPosition, int toPosition) {
+//    @Override
+//    public void onItemMove(int fromPosition, int toPosition) {
+//
+//    }
 
-    }
+//    @Override
+//    public void onItemDismiss(int position) {
+//        mTuiJianList.remove(position);
+//        notifyItemRemoved(position);
+//        //数据库删除操作
+//
+//    }
 
-    @Override
-    public void onItemDissmiss(int position) {
-        mTuiJianList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    public static class MyShouCangViewHolder extends RecyclerView.ViewHolder{
+    public class MyShouCangViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageView;
         private TextView mTextView,contentTextView;
 
@@ -84,6 +92,18 @@ public class ShouCangAdapter extends RecyclerView.Adapter<ShouCangAdapter.MyShou
             mImageView = (ImageView) itemView.findViewById(R.id.icon_shoucang);
             mTextView = (TextView) itemView.findViewById(R.id.username_shoucang);
             contentTextView = (TextView) itemView.findViewById(R.id.content_shoucang);
+            View delete = itemView.findViewById(R.id.delete);
+            delete.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            mTuiJianList.remove(pos);
+            notifyItemRemoved(pos);
+            //下面还要做数据库删除操作
+            SQLiteDatabase db = mHelper.getWritableDatabase();
+            //db.delete();
         }
     }
 }

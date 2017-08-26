@@ -8,5 +8,5 @@ package com.songchao.mybilibili.util;
 
 public interface ItemTouchHelperAdapter {
     void onItemMove(int fromPosition,int toPosition);
-    void onItemDissmiss(int position);
+    void onItemDismiss(int position);
 }

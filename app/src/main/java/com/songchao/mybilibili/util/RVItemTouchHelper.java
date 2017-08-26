@@ -7,10 +7,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Author: SongCHao
  * Date: 2017/8/26/15:34
  * Email: 15704762346@163.com
- * 今天我生日，为了庆祝，强行自己学习一波，周六在家写代码，留个纪念
- * 作为一个单身少年，哈哈，妈的过生日都没人陪，是真地惨
- * 我的生日愿望就是希望自己能改掉懒惰这个毛病，如果能做到把时间全部放在
- * 编程上面，老子5年不谈恋爱都行
  */
 
 public class RVItemTouchHelper extends ItemTouchHelper.Callback {
@@ -73,6 +69,6 @@ public class RVItemTouchHelper extends ItemTouchHelper.Callback {
      */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        mAdapter.onItemDissmiss(viewHolder.getAdapterPosition());
+        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }
