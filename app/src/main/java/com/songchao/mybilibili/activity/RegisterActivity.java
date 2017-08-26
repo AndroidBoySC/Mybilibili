@@ -17,6 +17,7 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.songchao.mybilibili.R;
 
@@ -26,11 +27,14 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView backImageView;
     private FloatingActionButton fab;
     private CardView cvAdd;
+    private TextView titleText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        titleText = (TextView) findViewById(R.id.tv_title);
+        titleText.setText("注册");
         backImageView = (ImageView) findViewById(R.id.back_title);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         cvAdd = (CardView) findViewById(R.id.cv_add);

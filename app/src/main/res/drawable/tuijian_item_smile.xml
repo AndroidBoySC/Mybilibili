@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--注意state_xxxz这个属性要看设置的控件是否具备-->
+    <item android:state_selected="true" android:drawable="@mipmap/smile2"/>
+    <item android:state_selected="false" android:drawable="@mipmap/smile"/>
+</selector>

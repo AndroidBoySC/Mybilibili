@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         if(isLogin == true){
             textViewLogin.setText("已登录");
         }else {
-            textViewLogin.setText("点击用户头像登录");
+            textViewLogin.setText("点击头像登录");
         }
         //隐藏ActionbarLo
         //mActionBar = getSupportActionBar();
@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
     }
 
+    /**
+     * 三方分享
+     */
     private void showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
