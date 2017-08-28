@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class TuiJianFragment extends Fragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tui_jian,container,false);
         //在fragment加载时就创建数据库和表
         mHelper = new MySaveDatabaseHelper(getActivity(),"QiuShi.db",null,1);
+        Log.d("Photo","线程ＩＤ："+Thread.currentThread().getId());
         initView(view);
         initData();
         setData();
@@ -73,7 +75,13 @@ public class TuiJianFragment extends Fragment {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(getActivity(),"请检查你的网络设置",Toast.LENGTH_SHORT).show();
+            //这里的回调方法是子线程中进行的
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(),"请检查你的网络设置",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
