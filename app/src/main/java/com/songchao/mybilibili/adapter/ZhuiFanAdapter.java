@@ -25,6 +25,7 @@ public class ZhuiFanAdapter extends RecyclerView.Adapter<ZhuiFanAdapter.ZhuiFanV
 
     public ZhuiFanAdapter(List<City> cities, Context context) {
         mCities.addAll(cities);
+       //mCities = cities;
         mContext = context;
     }
 

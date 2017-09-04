@@ -20,6 +20,7 @@
             >
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_height="wrap_content">
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -38,26 +39,44 @@
                     android:textColor="#fff"
                     android:textSize="18sp"/>
             </android.support.v7.widget.Toolbar>
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tab_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    app:tabTextColor="#e2dbdb"
-                    app:tabSelectedTextColor="#fff"
-                    app:tabIndicatorColor="#fff"
-                    app:tabIndicatorHeight="3dp"
-                    />
-
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tab_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAccent"
+                        app:tabTextColor="#e2dbdb"
+                        app:tabSelectedTextColor="#fff"
+                        app:tabIndicatorColor="#fff"
+                        app:tabIndicatorHeight="3dp"
+                        />
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_main"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            </FrameLayout>
+            <!--<android.support.v4.view.ViewPager-->
+                <!--android:id="@+id/vp_main"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottom_main_navigation"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                app:layout_behavior="@string/bottom_view_behavior"
+                android:elevation="5dp"
+                app:menu="@menu/menu_bottom_navigation_view"
+                android:background="#FFFFFF"
+                android:layout_gravity="bottom"/>
         </android.support.design.widget.CoordinatorLayout>
+
+
+
+
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
@@ -66,4 +85,5 @@
             app:menu="@menu/nav_drawerlayout_menu"
             app:headerLayout="@layout/nav_heafder"/>
     </android.support.v4.widget.DrawerLayout>
+
 </LinearLayout>

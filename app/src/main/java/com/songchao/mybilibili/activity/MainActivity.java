@@ -13,10 +13,13 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -36,12 +39,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
-import com.songchao.mybilibili.adapter.MyFragmentPageAdapter;
-import com.songchao.mybilibili.fragment.DongTaiFragment;
-import com.songchao.mybilibili.fragment.FenQuFragment;
-import com.songchao.mybilibili.fragment.TuiJianFragment;
-import com.songchao.mybilibili.fragment.ZhiBoFragment;
-import com.songchao.mybilibili.fragment.ZhuiFanFragment;
+import com.songchao.mybilibili.fragment.FirstFragment;
+import com.songchao.mybilibili.fragment.SecondFragment;
+import com.songchao.mybilibili.fragment.ThirdFragment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,12 +51,12 @@ import java.util.List;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
     private long lastPressTime = 0;
     //ActionBar mActionBar;
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
-    private TabLayout mTabLayout;
+    public TabLayout mTabLayout;
     private ViewPager mViewPager;
     private NavigationView mNavigationView;
     private CircleImageView mCircleImageView;
@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private SharedPreferences mPreferences;
     private Boolean isLogin;
     private Dialog mCameraDialog;
+    private BottomNavigationView bottom_main_navigation;
+    private List<Fragment> fragments;
     //头像文件
     private static final String IMAGE_FILE_NAME = "head_image.jpg";
     //请求识别码
@@ -88,10 +90,36 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         explode.setDuration(500);
         getWindow().setExitTransition(explode);
         getWindow().setEnterTransition(explode);
-
-
+        fragments = new ArrayList<>();
+        FragmentManager manager = getSupportFragmentManager();
+        if(savedInstanceState == null){
+            Fragment fragment = new FirstFragment();
+            fragments.add(fragment);
+            fragment = new SecondFragment();
+            fragments.add(fragment);
+            fragment = new ThirdFragment();
+            fragments.add(fragment);
+            FragmentTransaction transaction = manager.beginTransaction();
+            int index = 0;
+            for (Fragment f : fragments){
+                transaction.add(R.id.container,f,"tag"+index);
+                transaction.hide(f);
+                index++;
+            }
+            transaction.show(fragments.get(0));
+            transaction.commit();
+        }else {
+            for (int i = 0; i < 3; i++) {
+                String tag = "tag"+i;
+                Fragment f = manager.findFragmentByTag(tag);
+                if(f != null){
+                    fragments.add(f);
+                }
+            }
+        }
         initView();
         initData();
+
         String name = mPreferences.getString("userName", "0");
         String passWord = mPreferences.getString("passWord", "0");
         isLogin = mPreferences.getBoolean("isLogin", false);
@@ -111,6 +139,25 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 showShare();
             }
         });
+    }
+    private void switchFragment(int index) {
+        if (index >= 0 && index < fragments.size()) {
+            int size = fragments.size();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            for (int i = 0; i < size; i++) {
+                Fragment f = fragments.get(i);
+                if (i == index) {
+                    // 显示
+                    transaction.show(f);
+                } else {
+                    // 隐藏
+                    transaction.hide(f);
+                }
+            }
+            transaction.commit();
+
+        }
     }
 
     /**
@@ -145,32 +192,33 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     private void initData() {
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new ZhiBoFragment());
-        fragments.add(new TuiJianFragment());
-        fragments.add(new ZhuiFanFragment());
-        fragments.add(new FenQuFragment());
-        fragments.add(new DongTaiFragment());
-        MyFragmentPageAdapter myFragmentPageAdapter = new MyFragmentPageAdapter(getSupportFragmentManager(),fragments);
-        mViewPager.setAdapter(myFragmentPageAdapter);
-        mTabLayout.setOnTabSelectedListener(this);
-        TabLayout.Tab tab0 = mTabLayout.newTab();
-        tab0.setText("直播");
-        mTabLayout.addTab(tab0);
-        TabLayout.Tab tab1 = mTabLayout.newTab();
-        tab1.setText("推荐");
-        mTabLayout.addTab(tab1);
-        TabLayout.Tab tab2 = mTabLayout.newTab();
-        tab2.setText("追番");
-        mTabLayout.addTab(tab2);
-        TabLayout.Tab tab3 = mTabLayout.newTab();
-        tab3.setText("分区");
-        mTabLayout.addTab(tab3);
-        TabLayout.Tab tab4 = mTabLayout.newTab();
-        tab4.setText("动态");
-        mTabLayout.addTab(tab4);
-        TabLayout.TabLayoutOnPageChangeListener listener = new TabLayout.TabLayoutOnPageChangeListener(mTabLayout);
-        mViewPager.addOnPageChangeListener(listener);
+        //以下被注释掉的代码是旧版UI的实现代码
+//        List<Fragment> fragments = new ArrayList<>();
+//        fragments.add(new ZhiBoFragment());
+//        fragments.add(new TuiJianFragment());
+//        fragments.add(new ZhuiFanFragment());
+//        fragments.add(new FenQuFragment());
+//        fragments.add(new DongTaiFragment());
+//        MyFragmentPageAdapter myFragmentPageAdapter = new MyFragmentPageAdapter(getSupportFragmentManager(),fragments);
+//        mViewPager.setAdapter(myFragmentPageAdapter);
+        //mTabLayout.setOnTabSelectedListener(this);
+//        TabLayout.Tab tab0 = mTabLayout.newTab();
+//        tab0.setText("直播");
+//        mTabLayout.addTab(tab0);
+//        TabLayout.Tab tab1 = mTabLayout.newTab();
+//        tab1.setText("推荐");
+//        mTabLayout.addTab(tab1);
+//        TabLayout.Tab tab2 = mTabLayout.newTab();
+//        tab2.setText("追番");
+//        mTabLayout.addTab(tab2);
+//        TabLayout.Tab tab3 = mTabLayout.newTab();
+//        tab3.setText("分区");
+//        mTabLayout.addTab(tab3);
+//        TabLayout.Tab tab4 = mTabLayout.newTab();
+//        tab4.setText("动态");
+//        mTabLayout.addTab(tab4);
+        //TabLayout.TabLayoutOnPageChangeListener listener = new TabLayout.TabLayoutOnPageChangeListener(mTabLayout);
+        //mViewPager.addOnPageChangeListener(listener);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -277,6 +325,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     private void initView() {
+
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(" ");
         setSupportActionBar(mToolbar);
@@ -289,8 +339,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         View headerView = mNavigationView.getHeaderView(0);
         textViewLogin = (TextView) headerView.findViewById(R.id.tv_login);
         textViewShare = (TextView) findViewById(R.id.share_main);
-        mViewPager = (ViewPager) findViewById(R.id.vp_main);
+        //mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
+        bottom_main_navigation = (BottomNavigationView) findViewById(R.id.bottom_main_navigation);
+        MenuItem item = bottom_main_navigation.getMenu().getItem(0);
+        bottom_main_navigation.setOnNavigationItemSelectedListener(this);
+
+        onNavigationItemSelected(item);//默认选中第一个
         mCircleImageView = (CircleImageView) headerView.findViewById(R.id.icon_image);
         mFilter = new IntentFilter();
         mFilter.addAction("com.songchao.mybilibili.notifilogin");
@@ -495,23 +550,47 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     /**
      * 以下3个方法为tablayout与viewpager联动的回调方法
-     * @param tab
+     * @param
      */
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        int position = tab.getPosition();
-        mViewPager.setCurrentItem(position);
-    }
+//    @Override
+//    public void onTabSelected(TabLayout.Tab tab) {
+//        //int position = tab.getPosition();
+//        //mViewPager.setCurrentItem(position);
+//    }
+//
+//    @Override
+//    public void onTabUnselected(TabLayout.Tab tab) {
+//
+//    }
+//
+//    @Override
+//    public void onTabReselected(TabLayout.Tab tab) {
+//
+//    }
 
     @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int index =0;
+        switch (item.getItemId()){
+            case R.id.menu_main_item_beauty:
+                //显示1Fragement
+                mTabLayout.setVisibility(View.VISIBLE);
+                index = 0;
+                break;
+            case R.id.menu_main_item_android:
+                //显示2Fragement
+                mTabLayout.setVisibility(View.GONE);
+                index = 1;
+                break;
+            case R.id.menu_main_item_three:
+                mTabLayout.setVisibility(View.GONE);
+                index = 2;
+                break;
+        }
+        switchFragment(index);
+        return true;
     }
 
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
     //广播接收器
     public class NotifyLoginUIReceiver extends BroadcastReceiver{
 
