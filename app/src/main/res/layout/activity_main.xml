@@ -74,9 +74,6 @@
                 android:layout_gravity="bottom"/>
         </android.support.design.widget.CoordinatorLayout>
 
-
-
-
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"

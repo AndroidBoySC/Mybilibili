@@ -40,8 +40,10 @@ import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.fragment.FirstFragment;
+import com.songchao.mybilibili.fragment.FouthFragment;
 import com.songchao.mybilibili.fragment.SecondFragment;
 import com.songchao.mybilibili.fragment.ThirdFragment;
+import com.songchao.mybilibili.util.BottomNavigationViewHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -99,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             fragments.add(fragment);
             fragment = new ThirdFragment();
             fragments.add(fragment);
+            fragment = new FouthFragment();
+            fragments.add(fragment);
             FragmentTransaction transaction = manager.beginTransaction();
             int index = 0;
             for (Fragment f : fragments){
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             transaction.show(fragments.get(0));
             transaction.commit();
         }else {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 String tag = "tag"+i;
                 Fragment f = manager.findFragmentByTag(tag);
                 if(f != null){
@@ -140,6 +144,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
     }
+
+    /**
+     * 底部导航栏切换
+     * @param index
+     */
     private void switchFragment(int index) {
         if (index >= 0 && index < fragments.size()) {
             int size = fragments.size();
@@ -325,8 +334,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void initView() {
-
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(" ");
         setSupportActionBar(mToolbar);
@@ -342,9 +349,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //mViewPager = (ViewPager) findViewById(R.id.vp_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_main);
         bottom_main_navigation = (BottomNavigationView) findViewById(R.id.bottom_main_navigation);
+        //该方法调用helper类去掉大于3时的动画
+        BottomNavigationViewHelper.disableShiftMode(bottom_main_navigation);
         MenuItem item = bottom_main_navigation.getMenu().getItem(0);
         bottom_main_navigation.setOnNavigationItemSelectedListener(this);
-
         onNavigationItemSelected(item);//默认选中第一个
         mCircleImageView = (CircleImageView) headerView.findViewById(R.id.icon_image);
         mFilter = new IntentFilter();
@@ -585,6 +593,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.menu_main_item_three:
                 mTabLayout.setVisibility(View.GONE);
                 index = 2;
+                break;
+            case R.id.menu_main_item_message:
+                mTabLayout.setVisibility(View.GONE);
+                index = 3;
                 break;
         }
         switchFragment(index);

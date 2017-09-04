@@ -3,14 +3,21 @@
     <item
         android:id="@+id/menu_main_item_beauty"
         android:checked="true"
-        android:title="测试1"/>
+        android:icon="@mipmap/one"
+        android:title="首页"/>
 
     <item
         android:id="@+id/menu_main_item_android"
-        android:title="测试2"/>
+        android:icon="@mipmap/range"
+        android:title="分区"/>
 
     <item
         android:id="@+id/menu_main_item_three"
-        android:title="测试3"/>
+        android:icon="@mipmap/state"
+        android:title="动态"/>
+    <item
+        android:id="@+id/menu_main_item_message"
+        android:icon="@mipmap/message"
+        android:title="消息"/>
 
 </menu>
