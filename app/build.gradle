@@ -18,6 +18,12 @@ android {
         }
     }
 }
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
 //此段是为了实现仿qq侧滑删除
 //allprojects {
 //repositories {
@@ -57,5 +63,6 @@ dependencies {
     compile 'com.zxy.android:recovery:0.0.8'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.github.open-android:IjkPlayer:1.0.0'
     testCompile 'junit:junit:4.12'
 }

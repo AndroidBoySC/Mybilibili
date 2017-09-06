@@ -39,10 +39,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
+import com.songchao.mybilibili.fragment.DongTaiFragment;
 import com.songchao.mybilibili.fragment.FirstFragment;
 import com.songchao.mybilibili.fragment.FouthFragment;
 import com.songchao.mybilibili.fragment.SecondFragment;
-import com.songchao.mybilibili.fragment.ThirdFragment;
 import com.songchao.mybilibili.util.BottomNavigationViewHelper;
 
 import java.io.File;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             fragments.add(fragment);
             fragment = new SecondFragment();
             fragments.add(fragment);
-            fragment = new ThirdFragment();
+            fragment = new DongTaiFragment();
             fragments.add(fragment);
             fragment = new FouthFragment();
             fragments.add(fragment);
