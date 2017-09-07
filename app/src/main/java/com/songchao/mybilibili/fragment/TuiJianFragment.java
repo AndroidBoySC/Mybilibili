@@ -51,8 +51,8 @@ public class TuiJianFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_tui_jian,container,false);
-        //在fragment加载时就创建数据库和表
-        mHelper = new MySaveDatabaseHelper(getActivity(),"QiuShi.db",null,1);
+        //在fragment加载时就创建数据库和表,这里其实要写到application中
+        mHelper = new MySaveDatabaseHelper(getActivity(),"QiuShi.db",null,2);
         Log.d("Photo","线程ＩＤ："+Thread.currentThread().getId());
         initView(view);
         initData();

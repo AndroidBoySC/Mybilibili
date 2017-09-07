@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.adapter.DongTaiAdapter;
 import com.songchao.mybilibili.config.NetConfig;
+import com.songchao.mybilibili.db.MySaveDatabaseHelper;
 import com.songchao.mybilibili.model.MyVideo;
 
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ public class DongTaiFragment extends Fragment {
     private List<MyVideo> mVideoList;
     private DongTaiAdapter mAdapter;
     private OkHttpClient mClient;
+    private MySaveDatabaseHelper mHelper;
 
 
     public DongTaiFragment() {
@@ -49,9 +51,10 @@ public class DongTaiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dong_tai,container,false);
+        mHelper = new MySaveDatabaseHelper(getActivity(),"QiuShi.db",null,2);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_video);
         mVideoList = new ArrayList<>();
-        mAdapter = new DongTaiAdapter(mVideoList,getActivity());
+        mAdapter = new DongTaiAdapter(mVideoList,getActivity(),mHelper);
         mClient = new OkHttpClient();
         Request.Builder builder = new Request.Builder().url(NetConfig.URL_ETLITE_DAYYY+2);
         builder.method("GET",null);

@@ -36,7 +36,7 @@ public class ShouCangAdapter extends RecyclerView.Adapter<ShouCangAdapter.MyShou
         mTuiJianList = tuiJianList;
         mContext = context;
         mHelper = helper;
-        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,1);
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,2);
         mHelper.getWritableDatabase();
     }
 

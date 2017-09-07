@@ -1,9 +1,13 @@
 package com.songchao.mybilibili.adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +18,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.dl7.player.media.IjkPlayerView;
 import com.songchao.mybilibili.R;
+import com.songchao.mybilibili.activity.DownloadActivity;
 import com.songchao.mybilibili.config.NetConfig;
+import com.songchao.mybilibili.db.MySaveDatabaseHelper;
 import com.songchao.mybilibili.model.MyVideo;
 
 import java.util.List;
@@ -30,9 +36,13 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiViewHolder>{
     private List<MyVideo> mVideos;
     private Context mContext;
+    private MySaveDatabaseHelper mHelper;
 
-    public DongTaiAdapter(List<MyVideo> videos, Context context) {
+    public DongTaiAdapter(List<MyVideo> videos, Context context,MySaveDatabaseHelper helper) {
         mVideos = videos;
+        mHelper = helper;
+        mHelper.getWritableDatabase();
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,2);
         mContext = context;
     }
 
@@ -95,6 +105,22 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
                 Toast.makeText(mContext,"等想好了怎么设计再写此处功能",Toast.LENGTH_SHORT).show();
             }
         });
+        holder.saveImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.saveImageView.setImageResource(R.mipmap.save2);
+                SQLiteDatabase db = mHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put("id",video.vid);
+                values.put("husername",video.vuserName);
+                values.put("htitle",video.vcontent);
+                values.put("hicon",video.vicon);
+                values.put("hvideo",video.vhighUrl);
+                values.put("hzhanwei",video.vpic);
+                db.insert("QiuShiPin",null,values);
+                values.clear();
+            }
+        });
 
         holder.bofangImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +128,19 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
                 holder.bofangImageView.setVisibility(View.GONE);
                 holder.zhanweiImageView.setVisibility(View.GONE);
                 Uri uri = Uri.parse(vhighUrl);
+                Log.d("Photo", "uri: "+uri);
                 holder.mPlayerView.init().setVideoPath(uri).setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH).enableDanmaku().start();
                 // TODO: 2017/9/6 这块有个遗留的问题暂时不解决，就是点击其他视频停止播放当前视频，同时还可以添加上滑或下滑变成小窗口播放效果
                 // TODO: 2017/9/6 网上会有这样的demo，但是改动较大，有时间自己在自己写的这个基础上做开发
+            }
+        });
+        holder.downImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DownloadActivity.class);
+                intent.putExtra("currenturl",vhighUrl);
+                Log.d("Photo", "vhighUrl: "+vhighUrl);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -115,7 +151,8 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
     }
 
     public class DongTaiViewHolder extends RecyclerView.ViewHolder{
-        private ImageView iconImageView,smileImageView,cryImageView,talkImageView,saveImageView,shareImageView,zhanweiImageView,bofangImageView;
+        private ImageView iconImageView,smileImageView,cryImageView,talkImageView
+                ,saveImageView,shareImageView,downImageView,zhanweiImageView,bofangImageView;
         private TextView titleTextView,contentTextView,countTextView;
         private IjkPlayerView mPlayerView;
         private Context mContext;
@@ -129,6 +166,7 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
             talkImageView = (ImageView) itemView.findViewById(R.id.iv_talk_dongtai);
             saveImageView = (ImageView) itemView.findViewById(R.id.iv_save_dongtai);
             shareImageView = (ImageView) itemView.findViewById(R.id.iv_share_dongtai);
+            downImageView = (ImageView) itemView.findViewById(R.id.iv_down_dongtai);
             zhanweiImageView = (ImageView) itemView.findViewById(R.id.zhanwei);
             bofangImageView = (ImageView) itemView.findViewById(R.id.play);
             titleTextView = (TextView) itemView.findViewById(R.id.user_dongtai);

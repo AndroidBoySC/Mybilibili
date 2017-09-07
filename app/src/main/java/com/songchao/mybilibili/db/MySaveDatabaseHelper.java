@@ -13,6 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MySaveDatabaseHelper extends SQLiteOpenHelper{
     public static final String CREATE_QIUSHI = "create table QiuShi(id integer primary key autoincrement," +
             "username text,content text,icon text)";
+    public static final String CREATE_QIUSHIPIN = "create table QiuShiPin(id integer primary key autoincrement," +
+            "husername text,htitle text,hicon text,hvideo text,hzhanwei text)";
+
     private Context mContext;
     public MySaveDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -22,11 +25,13 @@ public class MySaveDatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_QIUSHI);
-
+        sqLiteDatabase.execSQL(CREATE_QIUSHIPIN);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("drop table if exists QiuShi");
+        sqLiteDatabase.execSQL("drop table if exists QiuShiPin");
+        onCreate(sqLiteDatabase);
     }
 }

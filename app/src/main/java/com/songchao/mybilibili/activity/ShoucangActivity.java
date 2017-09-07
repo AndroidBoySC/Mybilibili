@@ -53,7 +53,7 @@ public class ShoucangActivity extends AppCompatActivity {
 
     private void initData() {
         mTuiJianList = new ArrayList<>();
-        mHelper = new MySaveDatabaseHelper(this,"QiuShi.db",null,1);
+        mHelper = new MySaveDatabaseHelper(this,"QiuShi.db",null,2);
         SQLiteDatabase db = mHelper.getWritableDatabase();
         //查询
         Cursor cursor = db.query("QiuShi",null,null,null,null,null,null);
@@ -72,7 +72,7 @@ public class ShoucangActivity extends AppCompatActivity {
                 tuiJian.id = id;
                 //这里出现一个小插曲，就是之前没想存icon，所以数据库的表结构没创建这个字段，后来想存了
                 //直接在建表语句里加了，但是运行程序始终是显示取不到这个值，原因是给数据库表结构添加字段
-                //属于升级，必须卸载程序再运行才有效
+                //属于升级，必须卸载程序或做升级数据库再运行才有效
                 Log.d("Photo","name: " + name);
                 Log.d("Photo","content: " + content);
                 Log.d("Photo","icon: " + icon);

@@ -127,43 +127,51 @@
 
             <ImageView
                 android:id="@+id/iv_smile_dongtai"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tuijian_item_smile"
                 android:clickable="true"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 android:layout_margin="10dp"/>
             <ImageView
                 android:id="@+id/iv_cry_dongtai"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tuijian_item_cry"
                 android:clickable="true"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 android:layout_margin="10dp"/>
             <ImageView
                 android:id="@+id/iv_talk_dongtai"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/talk"
                 android:clickable="true"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 android:layout_margin="10dp"/>
             <ImageView
                 android:id="@+id/iv_save_dongtai"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/save"
                 android:clickable="true"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:id="@+id/iv_down_dongtai"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/itemdownload"
+                android:clickable="true"
+                android:layout_weight="1"
                 android:layout_margin="10dp"/>
             <ImageView
                 android:id="@+id/iv_share_dongtai"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/share"
                 android:clickable="true"
-                android:layout_weight="0.2"
+                android:layout_weight="1"
                 android:layout_margin="10dp"/>
 
 

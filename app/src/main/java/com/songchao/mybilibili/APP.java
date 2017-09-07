@@ -23,11 +23,12 @@ public class APP extends MobApplication{
     public static int H;
     public static List<?> images=new ArrayList<>();
     public static List<String> titles=new ArrayList<>();
+    //private MySaveDatabaseHelper mHelper;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //mHelper = new MySaveDatabaseHelper(this,"QiuShi.db",null,1);
         initBanner();
     }
 
