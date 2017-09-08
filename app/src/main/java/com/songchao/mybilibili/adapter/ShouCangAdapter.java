@@ -75,6 +75,13 @@ public class ShouCangAdapter extends RecyclerView.Adapter<ShouCangAdapter.MyShou
                 //这里有个notifyitemremoved方法的坑，删除第一个item后，未删除的item的position
                 //不会改变，因为并不会再调用onbind方法，所以会有崩溃，数组索引越界什么的
                 //这里用holder.getAdapterPosition替换position，就不会有问题了
+                /**
+                 * 但需要注意的是，这些带有动画效果的方法仅仅是起到界面动画的效果
+                 * 实际上并没有进行数据与界面的重新绑定。通过打log可以发现，动画播放前后
+                 * onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position)中
+                 * 的position形参是没有改变的。但实际上由于添加/删除Item的影响，
+                 * 被点击的Item(假如这个Item是列表中靠后的)的position值应该添加1或减少1
+                 */
                 mTuiJianList.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
             }

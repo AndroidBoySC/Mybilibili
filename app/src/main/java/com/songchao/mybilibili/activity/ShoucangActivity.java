@@ -87,6 +87,7 @@ public class ShoucangActivity extends AppCompatActivity {
 
     private void setData() {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        //侧滑删除的根布局是SwipeItemLayout这个自定义view
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
         mRecyclerView.setAdapter(mAdapter);
         /**

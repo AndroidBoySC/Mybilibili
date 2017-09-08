@@ -1,5 +1,7 @@
 package com.songchao.mybilibili.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -42,7 +44,7 @@ public class HistoryActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_history);
         mVideos = new ArrayList<>();
         mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null, 2);
-        SQLiteDatabase db = mHelper.getWritableDatabase();
+        final SQLiteDatabase db = mHelper.getWritableDatabase();
         Cursor cursor = db.query("QiuShiPin", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             //遍历cursor对象，取出数据
@@ -68,6 +70,39 @@ public class HistoryActivity extends AppCompatActivity {
             mAdapter = new HistoryAdapter(mVideos,mHelper,this);
         }
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        /**
+         * adapter中的回调监听
+         */
+        mAdapter.setOnClickListener(new HistoryAdapter.onClickListener() {
+            @Override
+            public void onItemLongClick(View view, final int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HistoryActivity.this);
+                builder.setMessage("是否确认删除？");
+                builder.setPositiveButton("确认" ,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        //这块要拿到对应item的数据接口中的id，想一想怎么获取，在adapter中是通过泛型为对应实体Bean
+                        //的集合getposition返回的对象.id得到然后赋给holder相应的view,以下方式解决了，对参数的理解又进步了
+                        MyVideo video = mVideos.get(position);
+                        int vid = video.vid;
+                        //long itemId = mAdapter.getItemId(position);这种是不行的，我的理解是这个得到的id是item的id，不是item对应数据接口的id
+                        db.delete("QiuShiPin","id="+vid,null);
+                        //以下3行一行都不能少，否则没效果，解决recyclerview中item删除的坑
+                        mVideos.remove(position);
+                        mAdapter.notifyItemRemoved(position);
+                        mAdapter.notifyItemRangeChanged(position,mVideos.size());
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 }
