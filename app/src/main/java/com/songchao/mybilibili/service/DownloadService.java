@@ -19,8 +19,6 @@ import com.songchao.mybilibili.listener.DownloadListener;
 import java.io.File;
 
 public class DownloadService extends Service {
-    public DownloadService() {
-    }
     private DownloadTask mDownloadTask;
     private String downloadUrl;
     private DownloadListener mListener = new DownloadListener() {

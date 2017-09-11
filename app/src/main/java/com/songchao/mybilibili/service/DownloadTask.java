@@ -21,6 +21,7 @@ import okhttp3.Response;
  */
 
 public class DownloadTask extends AsyncTask<String,Integer,Integer> {
+    //几个状态的TAG
     public static final int TYPE_SUCCESS = 0;
     public static final int TYPE_FAILED = 1;
     public static final int TYPE_PAUSED = 2;
@@ -34,6 +35,11 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer> {
         mDownloadListener = downloadListener;
     }
 
+    /**
+     * 下载部分
+     * @param params
+     * @return
+     */
     @Override
     protected Integer doInBackground(String... params) {
         InputStream inputStream = null;
@@ -104,6 +110,10 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer> {
         return TYPE_FAILED;
     }
 
+    /**
+     * 更新进度
+     * @param values
+     */
     @Override
     protected void onProgressUpdate(Integer... values) {
         int progress = values[0];
@@ -113,6 +123,10 @@ public class DownloadTask extends AsyncTask<String,Integer,Integer> {
         }
     }
 
+    /**
+     *
+     * @param status
+     */
     @Override
     protected void onPostExecute(Integer status) {
         switch (status){

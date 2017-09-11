@@ -11,6 +11,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +28,19 @@ public class DownloadActivity extends AppCompatActivity {
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            //这块要写到这里，下载是异步的，得等到service连接完才能开启下载，否则直接写在点击事件里mDownloadBinder会一直为空
+            //所有的回调方法都是异步的
+            Log.d("Photo","IBinder:" + iBinder);
+            //向下转型
             mDownloadBinder = (DownloadService.DownloadBinder) iBinder;
+            Intent value = getIntent();
+            String url = value.getStringExtra("currenturl");
+            if (mDownloadBinder == null){
+                Log.d("Photo", "mDownloadBinder:="+mDownloadBinder);
+                return;
+            }
+            mDownloadBinder.startDownload(url);
+            Log.d("Photo", "url:"+url);
         }
 
         @Override
@@ -59,23 +72,23 @@ public class DownloadActivity extends AppCompatActivity {
         down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
-                Intent value = getIntent();
-                String url = value.getStringExtra("currenturl");
-                mDownloadBinder.startDownload(url);
                 Intent intent = new Intent(DownloadActivity.this,DownloadService.class);
-                startService(intent);//启动服务
                 bindService(intent,mConnection,BIND_AUTO_CREATE);//绑定服务
                 if(ContextCompat.checkSelfPermission(DownloadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
                         PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(DownloadActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
                 }
+                startService(intent);//启动服务
+                dialog.dismiss();
+
+
             }
         });
         cancelDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                mDownloadBinder.cancelDownload();
                 finish();
             } });
         dialog.setContentView(dialogView);

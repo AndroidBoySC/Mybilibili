@@ -61,6 +61,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //65行有个小异常
         View view = LayoutInflater.from(mContext).inflate(R.layout.history_item,parent,false);
         HistoryViewHolder holder = new HistoryViewHolder(view);
         return holder;
