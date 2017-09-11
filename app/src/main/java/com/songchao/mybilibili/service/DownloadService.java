@@ -13,7 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
-import com.songchao.mybilibili.activity.MainActivity;
+import com.songchao.mybilibili.activity.DownloadActivity;
 import com.songchao.mybilibili.listener.DownloadListener;
 
 import java.io.File;
@@ -32,7 +32,7 @@ public class DownloadService extends Service {
             mDownloadTask = null;
             //下载成功时将前台服务通知关闭，并创建一个下载成功的通知
             stopForeground(true);
-            getNotificationManager().notify(1,getNotification("下载成功",-1));
+            getNotificationManager().notify(1,getNotification("下载成功",100));
             Toast.makeText(DownloadService.this,"缓存完毕",Toast.LENGTH_SHORT).show();
 
         }
@@ -106,18 +106,28 @@ public class DownloadService extends Service {
         return (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
     private Notification getNotification(String title, int progress){
-        Intent intent = new Intent(this,MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this,0,intent,0);
+//        Intent intent = new Intent(this,MainActivity.class);
+//        PendingIntent pi = PendingIntent.getActivity(this,0,intent,0);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+//        builder.setSmallIcon(R.mipmap.ic_launcher);
+//        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
+//        builder.setContentTitle("糗事频");
+//        builder.setContentIntent(pi);
+//        if(progress >= 0){
+//            //当progress>=0时才需要显示下载进度
+//            builder.setContentText(progress + "%");
+//            builder.setProgress(100,progress,false);
+//        }
+        Intent intent = new Intent(this,DownloadActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
-        builder.setContentTitle("糗事频");
-        builder.setContentIntent(pi);
-        if(progress >= 0){
-            //当progress>=0时才需要显示下载进度
-            builder.setContentText(progress + "%");
-            builder.setProgress(100,progress,false);
-        }
+        builder.
+                setContentTitle(title).
+                setSmallIcon(R.mipmap.ic_launcher).setContentText(progress+"%").setProgress(100,progress,false).
+                setLargeIcon(BitmapFactory.decodeResource(getResources()
+                        ,R.mipmap.ic_launcher)).setContentIntent(pendingIntent)
+                .setDefaults(NotificationCompat.DEFAULT_LIGHTS);
         return builder.build();
+
     }
 }

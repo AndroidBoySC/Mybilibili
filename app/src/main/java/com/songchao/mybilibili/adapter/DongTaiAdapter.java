@@ -1,10 +1,14 @@
 package com.songchao.mybilibili.adapter;
 
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.IBinder;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,14 +22,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.dl7.player.media.IjkPlayerView;
 import com.songchao.mybilibili.R;
-import com.songchao.mybilibili.activity.DownloadActivity;
 import com.songchao.mybilibili.config.NetConfig;
 import com.songchao.mybilibili.db.MySaveDatabaseHelper;
 import com.songchao.mybilibili.model.MyVideo;
+import com.songchao.mybilibili.service.DownloadService;
 
 import java.util.List;
 
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
+import static android.content.Context.BIND_AUTO_CREATE;
 
 /**
  * Author: SongCHao
@@ -37,8 +43,24 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
     private List<MyVideo> mVideos;
     private Context mContext;
     private MySaveDatabaseHelper mHelper;
+    private DownloadService.DownloadBinder mDownloadBinder;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.d("Photo","IBinder:" + iBinder);
+            //向下转型
+            mDownloadBinder = (DownloadService.DownloadBinder) iBinder;
 
-    public DongTaiAdapter(List<MyVideo> videos, Context context,MySaveDatabaseHelper helper) {
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
+
+    public DongTaiAdapter(List<MyVideo> videos, Context context, MySaveDatabaseHelper helper) {
         mVideos = videos;
         mHelper = helper;
         mHelper.getWritableDatabase();
@@ -134,15 +156,47 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
                 // TODO: 2017/9/6 网上会有这样的demo，但是改动较大，有时间自己在自己写的这个基础上做开发
             }
         });
-        holder.downImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, DownloadActivity.class);
-                intent.putExtra("currenturl",vhighUrl);
-                Log.d("Photo", "vhighUrl: "+vhighUrl);
-                mContext.startActivity(intent);
-            }
-        });
+            holder.downImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /**
+                     * 下面4行是第一种跳转到activity中下载的方式，感觉不太好，就采用现在这种
+                     */
+//                Intent intent = new Intent(mContext, DownloadActivity.class);
+//                intent.putExtra("currenturl",vhighUrl);
+//                Log.d("Photo", "vhighUrl: "+vhighUrl);
+//                mContext.startActivity(intent);
+
+                    Intent intent = new Intent(mContext,DownloadService.class);
+                    mContext.bindService(intent,mConnection,BIND_AUTO_CREATE);//绑定服务
+                    mContext.startService(intent);
+
+                    final BottomSheetDialog dialog=new BottomSheetDialog(mContext);
+                    View dialogView= LayoutInflater.from(mContext) .inflate(R.layout.down_item,null);
+                    TextView down= (TextView) dialogView.findViewById(R.id.tv_down_item);
+                    TextView cancelDown= (TextView) dialogView.findViewById(R.id.tv_cancledown_item);
+                    down.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String url = vhighUrl;
+                            mDownloadBinder.startDownload(url);
+                            dialog.dismiss();
+                        }
+                    });
+                    cancelDown.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mDownloadBinder.cancelDownload();
+                            mContext.unbindService(mConnection);
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.setContentView(dialogView);
+                    dialog.show();
+                }
+            });
+
+
     }
 
     @Override

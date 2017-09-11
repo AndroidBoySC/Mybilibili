@@ -40,7 +40,6 @@ public class DongTaiFragment extends Fragment {
     private OkHttpClient mClient;
     private MySaveDatabaseHelper mHelper;
 
-
     public DongTaiFragment() {
         // Required empty public constructor
     }
