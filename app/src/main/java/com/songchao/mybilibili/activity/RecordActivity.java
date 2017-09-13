@@ -1,16 +1,22 @@
 package com.songchao.mybilibili.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.songchao.mybilibili.R;
+import com.songchao.mybilibili.fragment.PlaybackDialogFragment;
+import com.songchao.mybilibili.fragment.RecordAudioDialogFragment;
+import com.songchao.mybilibili.model.RecordingItem;
 
-public class DownloadActivity extends AppCompatActivity {
+public class RecordActivity extends AppCompatActivity {
     private TextView titleText;
     private ImageView backImageView;
+    private Button startButton,playButton;
 
     /**
      * private DownloadService.DownloadBinder mDownloadBinder;
@@ -47,14 +53,42 @@ public class DownloadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download);
+        setContentView(R.layout.activity_record);
         titleText = (TextView) findViewById(R.id.tv_title);
-        titleText.setText("下载");
+        titleText.setText("录音");
         backImageView = (ImageView) findViewById(R.id.back_title);
         backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        startButton = (Button) findViewById(R.id.recordbtn);
+        playButton = (Button) findViewById(R.id.recorplaydbtn);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
+                fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
+                fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
+                    @Override
+                    public void onCancel() {
+                        fragment.dismiss();
+                    }
+                });
+            }
+        });
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RecordingItem recordingItem = new RecordingItem();
+                SharedPreferences sharePreferences = getSharedPreferences("sp_name_audio", MODE_PRIVATE);
+                final String filePath = sharePreferences.getString("audio_path", "");
+                long elpased = sharePreferences.getLong("elpased", 0);
+                recordingItem.setFilePath(filePath);
+                recordingItem.setLength((int) elpased);
+                PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(recordingItem);
+                fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
             }
         });
     }

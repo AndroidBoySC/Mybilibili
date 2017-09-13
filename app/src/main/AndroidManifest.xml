@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
@@ -38,9 +39,9 @@
         </activity>
         <activity android:name=".activity.MainActivity">
         </activity>
-        <activity android:name=".activity.GameActivity">
+        <activity android:name=".activity.QRCodeActivity">
         </activity>
-        <activity android:name=".activity.DownloadActivity">
+        <activity android:name=".activity.RecordActivity">
         </activity>
         <activity android:name=".activity.SearchActivity">
         </activity>
@@ -132,6 +133,11 @@
 
         <service
             android:name=".service.DownloadService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+        <service
+            android:name=".service.RecordingService"
             android:enabled="true"
             android:exported="true">
         </service>

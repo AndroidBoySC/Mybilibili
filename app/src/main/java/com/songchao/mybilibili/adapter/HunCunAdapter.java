@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,12 +64,14 @@ public class HunCunAdapter extends RecyclerView.Adapter<HunCunAdapter.PicViewHol
             public void onClick(View view) {
                 //File file = null;
                 String fileName = dvhighUrl.substring(dvhighUrl.lastIndexOf("/"));
-                String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+                String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+                Log.d("Photo", "directory:"+directory);
                 //file = new File(directory + fileName);
                 //使用意图调用手机播放器播放本地视频
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                //参数为文件夹+文件名
-                Uri data = Uri.parse(directory+fileName);
+                //参数为文件夹+文件名  这个"file://"要加在前面
+                Uri data = Uri.parse("file://"+directory+fileName);
+                Log.d("Photo", "directory:"+"file://"+directory+fileName);
                 String type = "video/mp4";
                 intent.setDataAndType(data,type);
                 mContext.startActivity(intent);

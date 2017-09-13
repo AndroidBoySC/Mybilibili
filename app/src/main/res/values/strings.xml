@@ -11,4 +11,5 @@
     <!--<item name="android:windowContentOverlay">@null</item>-->
     <!--</style>-->
     <!--以上应该为老的设置启动页的方式，不改string文件一样可以实现，有点多余-->
+    <string name="default_file_name">My Recording</string>
 </resources>

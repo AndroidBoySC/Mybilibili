@@ -104,8 +104,8 @@ public class ZhiBoFragment extends Fragment {
         //        setHeader(mRecyclerView);
         initListener();
 
-        ArrayList<String> titles = new ArrayList<>(Arrays.asList(new String[]{"first title", "second title", "third title",
-                "fourth title"}));
+        ArrayList<String> titles = new ArrayList<>(Arrays.asList(new String[]{"安卓牛逼!", "安卓牛逼!!", "安卓牛逼!!!",
+                "安卓牛逼!!!!"}));
         Log.d("Photo","titles.size:" + titles.size());
         Log.d("Photo","APP.images.size:" + APP.images.size());
         //APP继承的是Application一定要在清单文件中注册！！！

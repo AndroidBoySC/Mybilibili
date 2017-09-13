@@ -162,7 +162,7 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
                     /**
                      * 下面4行是第一种跳转到activity中下载的方式，感觉不太好，就采用现在这种
                      */
-//                Intent intent = new Intent(mContext, DownloadActivity.class);
+//                Intent intent = new Intent(mContext, HuncunActivity.class);
 //                intent.putExtra("currenturl",vhighUrl);
 //                Log.d("Photo", "vhighUrl: "+vhighUrl);
 //                mContext.startActivity(intent);

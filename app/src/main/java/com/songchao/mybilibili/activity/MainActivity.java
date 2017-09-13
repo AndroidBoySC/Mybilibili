@@ -379,11 +379,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()){
                 case R.id.action_game:
-                    Intent intent = new Intent(MainActivity.this,GameActivity.class);
+                    Intent intent = new Intent(MainActivity.this,QRCodeActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.action_download:
-                    Intent intent1 = new Intent(MainActivity.this,DownloadActivity.class);
+                    Intent intent1 = new Intent(MainActivity.this,RecordActivity.class);
                     startActivity(intent1);
                     break;
                 case R.id.action_search:

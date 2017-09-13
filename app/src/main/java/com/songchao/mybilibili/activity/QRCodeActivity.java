@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.songchao.mybilibili.R;
 
-public class GameActivity extends AppCompatActivity {
+public class QRCodeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

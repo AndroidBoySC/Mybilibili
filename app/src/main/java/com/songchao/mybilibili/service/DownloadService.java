@@ -13,7 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
-import com.songchao.mybilibili.activity.DownloadActivity;
+import com.songchao.mybilibili.activity.HuancunActivity;
 import com.songchao.mybilibili.listener.DownloadListener;
 
 import java.io.File;
@@ -110,7 +110,7 @@ public class DownloadService extends Service {
     }
     private Notification getNotification(String title, int progress,boolean isVibrate){
 
-        Intent intent = new Intent(this,DownloadActivity.class);
+        Intent intent = new Intent(this, HuancunActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         //参数一等待参数二震动参数三等待参数四震动

@@ -4,13 +4,13 @@
       >
     <item
         android:id="@+id/action_game"
-        android:title="游戏"
-        android:icon="@mipmap/game"
+        android:title="扫一扫"
+        android:icon="@mipmap/qrcode"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_download"
-        android:title="下载"
-        android:icon="@mipmap/download"
+        android:title="录音"
+        android:icon="@mipmap/record"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_search"
