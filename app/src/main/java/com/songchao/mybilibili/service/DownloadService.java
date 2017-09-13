@@ -24,7 +24,9 @@ public class DownloadService extends Service {
     private DownloadListener mListener = new DownloadListener() {
         @Override
         public void onProgress(int progress) {
-            getNotificationManager().notify(1,getNotification("下载中...",progress));
+            //这里是通过不停地notify来更新进度条，这种方式不太好
+            // TODO: 2017/9/12 应该是跟着progress来进行更新,暂时不做修改
+            getNotificationManager().notify(1,getNotification("下载中...",progress,false));
         }
 
         @Override
@@ -32,8 +34,9 @@ public class DownloadService extends Service {
             mDownloadTask = null;
             //下载成功时将前台服务通知关闭，并创建一个下载成功的通知
             stopForeground(true);
-            getNotificationManager().notify(1,getNotification("下载成功",100));
+            getNotificationManager().notify(1,getNotification("下载成功",100,false));
             Toast.makeText(DownloadService.this,"缓存完毕",Toast.LENGTH_SHORT).show();
+
 
         }
 
@@ -42,7 +45,7 @@ public class DownloadService extends Service {
             mDownloadTask = null;
             //下载失败时将前台服务通知关闭，并创建一个下载失败的通知
             stopForeground(true);
-            getNotificationManager().notify(1,getNotification("下载失败",-1));
+            getNotificationManager().notify(1,getNotification("下载失败",-1,true));
             Toast.makeText(DownloadService.this,"缓存失败",Toast.LENGTH_SHORT).show();
 
         }
@@ -74,7 +77,7 @@ public class DownloadService extends Service {
                 downloadUrl = url;
                 mDownloadTask = new DownloadTask(mListener);
                 mDownloadTask.execute(downloadUrl);
-                startForeground(1,getNotification("下载中...",0));
+                startForeground(1,getNotification("下载中...",0,false));
                 Toast.makeText(DownloadService.this,"下载中...",Toast.LENGTH_SHORT).show();
             }
         }
@@ -105,28 +108,27 @@ public class DownloadService extends Service {
     private NotificationManager getNotificationManager(){
         return (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
-    private Notification getNotification(String title, int progress){
-//        Intent intent = new Intent(this,MainActivity.class);
-//        PendingIntent pi = PendingIntent.getActivity(this,0,intent,0);
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-//        builder.setSmallIcon(R.mipmap.ic_launcher);
-//        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
-//        builder.setContentTitle("糗事频");
-//        builder.setContentIntent(pi);
-//        if(progress >= 0){
-//            //当progress>=0时才需要显示下载进度
-//            builder.setContentText(progress + "%");
-//            builder.setProgress(100,progress,false);
-//        }
+    private Notification getNotification(String title, int progress,boolean isVibrate){
+
         Intent intent = new Intent(this,DownloadActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.
-                setContentTitle(title).
-                setSmallIcon(R.mipmap.ic_launcher).setContentText(progress+"%").setProgress(100,progress,false).
-                setLargeIcon(BitmapFactory.decodeResource(getResources()
-                        ,R.mipmap.ic_launcher)).setContentIntent(pendingIntent)
-                .setDefaults(NotificationCompat.DEFAULT_LIGHTS);
+        //参数一等待参数二震动参数三等待参数四震动
+        if(isVibrate) {
+            long[] vibrates = {0, 1000, 0, 0};
+            builder.
+                    setContentTitle(title).
+                    setSmallIcon(R.mipmap.ic_launcher).setContentText(progress + "%").setProgress(100, progress, false).
+                    setLargeIcon(BitmapFactory.decodeResource(getResources()
+                            , R.mipmap.ic_launcher)).setContentIntent(pendingIntent)
+                    .setVibrate(vibrates);
+        }else{
+            builder.
+                    setContentTitle(title).
+                    setSmallIcon(R.mipmap.ic_launcher).setContentText(progress + "%").setProgress(100, progress, false).
+                    setLargeIcon(BitmapFactory.decodeResource(getResources()
+                            , R.mipmap.ic_launcher)).setContentIntent(pendingIntent);
+        }
         return builder.build();
 
     }

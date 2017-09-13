@@ -64,7 +64,7 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
         mVideos = videos;
         mHelper = helper;
         mHelper.getWritableDatabase();
-        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,2);
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,3);
         mContext = context;
     }
 
@@ -180,6 +180,14 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
                         public void onClick(View view) {
                             String url = vhighUrl;
                             mDownloadBinder.startDownload(url);
+                            SQLiteDatabase db = mHelper.getWritableDatabase();
+                            ContentValues values = new ContentValues();
+                            values.put("id",video.vid);
+                            values.put("dtitle",video.vcontent);
+                            values.put("dzhanwei",video.vpic);
+                            values.put("durl",video.vhighUrl);
+                            db.insert("DownQiuShiPin",null,values);
+                            values.clear();
                             dialog.dismiss();
                         }
                     });

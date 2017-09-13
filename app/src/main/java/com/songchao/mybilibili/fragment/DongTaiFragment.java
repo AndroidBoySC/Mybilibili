@@ -50,7 +50,7 @@ public class DongTaiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dong_tai,container,false);
-        mHelper = new MySaveDatabaseHelper(getActivity(),"QiuShi.db",null,2);
+        mHelper = new MySaveDatabaseHelper(getActivity(),"QiuShi.db",null,3);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_video);
         mVideoList = new ArrayList<>();
         mAdapter = new DongTaiAdapter(mVideoList,getActivity(),mHelper);

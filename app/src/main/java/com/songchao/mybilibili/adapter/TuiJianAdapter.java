@@ -37,7 +37,7 @@ public class TuiJianAdapter extends RecyclerView.Adapter<TuiJianAdapter.TuiJianV
         mTuiJianList = tuiJianList;
         mHelper = helper;
         //这样写是可以的，但在开发项目时肯定要封装的
-        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,2);
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,3);
         mHelper.getWritableDatabase();
         mContext = context;
     }

@@ -15,6 +15,8 @@ public class MySaveDatabaseHelper extends SQLiteOpenHelper{
             "username text,content text,icon text)";
     public static final String CREATE_QIUSHIPIN = "create table QiuShiPin(id integer primary key autoincrement," +
             "husername text,htitle text,hicon text,hvideo text,hzhanwei text)";
+    public static final String CREATE_DOWNQIUSHIPIN = "create table DownQiuShiPin(id integer primary key autoincrement,"+
+    "dtitle text,dzhanwei text,durl text)";
 
     private Context mContext;
     public MySaveDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -26,12 +28,14 @@ public class MySaveDatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_QIUSHI);
         sqLiteDatabase.execSQL(CREATE_QIUSHIPIN);
+        sqLiteDatabase.execSQL(CREATE_DOWNQIUSHIPIN);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("drop table if exists QiuShi");
         sqLiteDatabase.execSQL("drop table if exists QiuShiPin");
+        sqLiteDatabase.execSQL("drop table if exists DownQiuShiPin");
         onCreate(sqLiteDatabase);
     }
 }

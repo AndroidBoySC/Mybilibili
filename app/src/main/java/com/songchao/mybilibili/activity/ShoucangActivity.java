@@ -53,7 +53,7 @@ public class ShoucangActivity extends AppCompatActivity {
 
     private void initData() {
         mTuiJianList = new ArrayList<>();
-        mHelper = new MySaveDatabaseHelper(this,"QiuShi.db",null,2);
+        mHelper = new MySaveDatabaseHelper(this,"QiuShi.db",null,3);
         SQLiteDatabase db = mHelper.getWritableDatabase();
         //查询
         Cursor cursor = db.query("QiuShi",null,null,null,null,null,null);
