@@ -64,7 +64,7 @@ public class DongTaiAdapter extends RecyclerView.Adapter<DongTaiAdapter.DongTaiV
         mVideos = videos;
         mHelper = helper;
         mHelper.getWritableDatabase();
-        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,3);
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,4);
         mContext = context;
     }
 
