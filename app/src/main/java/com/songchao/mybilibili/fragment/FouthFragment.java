@@ -37,20 +37,28 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class FouthFragment extends Fragment {
+    //左上角橘黄色的圆圈
     @Bind(R.id.main_iv_circle)
     ImageView mMainIvCircle;
+    //时间的textview
     @Bind(R.id.main_tv_date)
     TextView mMainTvDate;
+    //今天你什么都没写的textview
     @Bind(R.id.main_tv_content)
     TextView mMainTvContent;
+    //今天你什么都没写的LinearLayout
     @Bind(R.id.item_ll_control)
     LinearLayout mItemLlControl;
+    //展示日记内容的recyclerview
     @Bind(R.id.main_rv_show_diary)
     RecyclerView mMainRvShowDiary;
+    //整个的RelativeLayout
     @Bind(R.id.main_rl_main)
     RelativeLayout mMainRlMain;
+    //包裹圆圈日期什么都没写的LinearLayout
     @Bind(R.id.item_first)
     LinearLayout mItemFirst;
+    //次外层的LinearLayout
     @Bind(R.id.main_ll_main)
     LinearLayout mMainLlMain;
     private List<DiaryBean> mDiaryBeanList;
@@ -68,7 +76,7 @@ public class FouthFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_fouth,container,false);
         ButterKnife.bind(this,view);
-        //EventBus第二步注册事件，这
+        //EventBus第二步注册事件，这块不能用getActivity
         EventBus.getDefault().register(this);
         mHelper = new MySaveDatabaseHelper(getActivity(), "QiuShi.db", null, 4);
         getDiaryBeanList();
@@ -121,7 +129,7 @@ public class FouthFragment extends Fragment {
 
     //EventBus的第四个步骤处理事件
     @Subscribe
-    public void startUpdateDiaryActivity(StartUpdateDiaryEvent event) {
+    public void StartUpdateDiaryEvent(StartUpdateDiaryEvent event) {
         DiaryBean diaryBean = event.getDiaryBean();
         String title = diaryBean.getTitle();
         String content = diaryBean.getContent();

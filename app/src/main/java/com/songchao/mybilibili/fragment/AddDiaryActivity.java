@@ -26,17 +26,22 @@ import cc.trity.floatingactionbutton.FloatingActionButton;
 import cc.trity.floatingactionbutton.FloatingActionsMenu;
 
 public class AddDiaryActivity extends AppCompatActivity {
-
+    //添加日记界面日期
     @Bind(R.id.add_diary_tv_date)
     TextView mAddDiaryTvDate;
+    //日记标题的edittext
     @Bind(R.id.add_diary_et_title)
     EditText mAddDiaryEtTitle;
+    //日记内容的自定义edittext
     @Bind(R.id.add_diary_et_content)
     LinedEditText mAddDiaryEtContent;
+    //x的floatingbutton
     @Bind(R.id.add_diary_fab_back)
     FloatingActionButton mAddDiaryFabBack;
+    //对勾的floatingbutton
     @Bind(R.id.add_diary_fab_add)
     FloatingActionButton mAddDiaryFabAdd;
+    //整个的弹出floatingbutton
     @Bind(R.id.right_labels)
     FloatingActionsMenu mRightLabels;
     @Bind(R.id.back_title)

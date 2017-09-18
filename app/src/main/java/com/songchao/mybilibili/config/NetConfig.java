@@ -12,7 +12,6 @@ public interface NetConfig {
     //下面这种处理利用占位符
     //String.format(NetConfig.URL_USER_ICON,user.getId()/10000,user.getId(),user.getIcon()
     String URL_USER_ICON="http://pic.qiushibaike.com/system/avtnew/%d/%d/thumb/%s";
-
     // 专享
     String URL_HOT_SUGGEST = "http://m2.qiushibaike.com/article/list/suggest?page=";
     // 视频
@@ -23,5 +22,8 @@ public interface NetConfig {
     String URL_HOT_LATEST = "http://m2.qiushibaike.com/article/list/latest?page=";
     //评论
     String URL_COMMENT = "http://m2.qiushibaike.com/article/%d/comments?page=2";
-
+    //新闻
+    String URL_DOUBLENEWS = "http://api.dagoogle.cn/news/get-news?tableNum=1&pagesize=20&callback=?&justList=1";
+    //
+    String URL_NEW = "http://api.dagoogle.cn/news/get-news?tableNum=1&pagesize=100";
 }

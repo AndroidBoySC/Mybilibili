@@ -92,6 +92,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         TextView mTvDate;
         TextView mTvTitle;
         TextView mTvContent;
+        //编辑跳转按钮
         ImageView mIvEdit;
         LinearLayout mLlTitle;
         LinearLayout mLl;

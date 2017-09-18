@@ -29,21 +29,28 @@ import cc.trity.floatingactionbutton.FloatingActionButton;
 import cc.trity.floatingactionbutton.FloatingActionsMenu;
 
 public class UpdateDiaryActivity extends AppCompatActivity {
-
+    //更新界面的时间textview
     @Bind(R.id.update_diary_tv_date)
     TextView mUpdateDiaryTvDate;
+    //更新界面的标题edittext
     @Bind(R.id.update_diary_et_title)
     EditText mUpdateDiaryEtTitle;
+    //更新界面的内容自定义edittext
     @Bind(R.id.update_diary_et_content)
     LinedEditText mUpdateDiaryEtContent;
+    //删除floatingbutton
     @Bind(R.id.update_diary_fab_back)
     FloatingActionButton mUpdateDiaryFabBack;
+    //对勾的floatingbutton
     @Bind(R.id.update_diary_fab_add)
     FloatingActionButton mUpdateDiaryFabAdd;
+    //x的floatingbutton
     @Bind(R.id.update_diary_fab_delete)
     FloatingActionButton mUpdateDiaryFabDelete;
+    //整个的floatingbutton
     @Bind(R.id.right_labels)
     FloatingActionsMenu mRightLabels;
+    //tag
     @Bind(R.id.update_diary_tv_tag)
     TextView mTvTag;
     @Bind(R.id.back_title)
@@ -79,6 +86,7 @@ public class UpdateDiaryActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.back_title:
                 finish();
+                break;
             case R.id.update_diary_fab_back:
                 showTips();
                 break;
@@ -115,9 +123,4 @@ public class UpdateDiaryActivity extends AppCompatActivity {
         EventBus.getDefault().post(new RefreshViewEvent());
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 }
