@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.songchao.mybilibili.R;
+import com.songchao.mybilibili.activity.DetailActivity;
 import com.songchao.mybilibili.model.ImageCard;
 
 import java.util.List;
@@ -56,7 +58,7 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_HEADER) return;
         final int pos = getRealPosition(holder);
         final ImageCard data = mImageCardList.get(pos);
@@ -66,6 +68,13 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
             Glide.with(mContext).load(data.getImgId()).into(holder.mImageView);
 
         }
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DetailActivity.startActivity(mContext,mImageCardList,(position-1));
+                Log.d("Photo","position:"+position);
+            }
+        });
 
     }
     private int getRealPosition(RecyclerView.ViewHolder holder){

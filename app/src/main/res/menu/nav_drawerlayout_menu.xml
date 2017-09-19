@@ -27,7 +27,7 @@
         <item
             android:id="@+id/nav_huiyuan"
             android:icon="@mipmap/huiyuan"
-            android:title="我的会员"/>
+            android:title="历史记录"/>
     </group>
     <group
         android:checkableBehavior="single">
@@ -38,7 +38,7 @@
         <item
             android:id="@+id/nav_theme"
             android:icon="@mipmap/theme"
-            android:title="主题"/>
+            android:title="购物"/>
         <item
             android:id="@+id/nav_night"
             android:icon="@mipmap/night"

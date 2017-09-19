@@ -146,6 +146,8 @@
         </activity>
         <activity android:name=".fragment.AddDiaryActivity">
         </activity>
+        <activity android:name=".activity.DetailActivity">
+        </activity>
     </application>
 
 </manifest>

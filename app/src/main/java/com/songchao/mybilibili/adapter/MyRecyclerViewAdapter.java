@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.model.DoubleNews;
 
@@ -64,10 +65,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         if (!TextUtils.isEmpty(source)){
             holder.sourceTextView.setText(source);
         }
-        if (!TextUtils.isEmpty(image)){
-
-            //Glide.with(mContext).load().into(holder.mImageView);
-        }
+        //这块直接load参数填image就可以，好好理解
+            Glide.with(mContext).load(image).into(holder.mImageView);
     }
     // 获取条目总数
     @Override

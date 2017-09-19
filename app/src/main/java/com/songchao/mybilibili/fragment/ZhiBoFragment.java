@@ -34,7 +34,7 @@ public class ZhiBoFragment extends Fragment {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     Banner mBanner;
     static final int REFRESH_COMPLETE = 0x1112;
-    //先模拟假数据做出效果，后期会替换真实数据接口
+    //展示的是本地图片
     private ImageCard[] mImageCards = {new ImageCard("one",R.mipmap.yasuo_01_cn),new ImageCard("two",R.mipmap.yasuo_04_cn),
     new ImageCard("three",R.mipmap.yasuo_05_cn),new ImageCard("four",R.mipmap.yasuo_06_cn)};
     private List<ImageCard> mImageCardList = new ArrayList<>();
@@ -90,6 +90,7 @@ public class ZhiBoFragment extends Fragment {
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swip_zhibo);
         mBanner = (Banner) header.findViewById(R.id.banner);
         mImageCardList.clear();
+        //随机生成30张
         for (int i = 0; i < 30; i++) {
             Random random = new Random();
             int index = random.nextInt(mImageCards.length);
