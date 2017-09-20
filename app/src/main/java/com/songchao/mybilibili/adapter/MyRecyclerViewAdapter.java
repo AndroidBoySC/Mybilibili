@@ -26,6 +26,15 @@ import java.util.List;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHodler>{
     private List<DoubleNews> mNewses;
     private Context mContext;
+    //接口回调
+    public interface onItemOnClickListener{
+        void onItemClick(View view,int position);
+    }
+    private onItemOnClickListener mOnItemOnClickListener;
+
+    public void setOnItemOnClickListener(onItemOnClickListener onItemOnClickListener) {
+        mOnItemOnClickListener = onItemOnClickListener;
+    }
 
     public MyRecyclerViewAdapter(List<DoubleNews> newses, Context context) {
         mNewses = newses;
@@ -41,7 +50,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
     // 这个方法里面只bind 绑定数据
     @Override
-    public void onBindViewHolder(MyViewHodler holder, int position) {
+    public void onBindViewHolder(final MyViewHodler holder, int position) {
         DoubleNews news = mNewses.get(position);
         String id = news.id;
         String title = news.title;
@@ -55,7 +64,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         if(!TextUtils.isEmpty(time)){
             //json接口里的是秒，Java里是毫秒，所以要乘以1000
             Date date = new Date(Long.parseLong(time)*1000);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm;ss");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String times = format.format(date);
             holder.timeTextView.setText(times);
         }
@@ -64,6 +73,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
         //这块直接load参数填image就可以，好好理解
             Glide.with(mContext).load(image).into(holder.mImageView);
+        if (mOnItemOnClickListener != null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = holder.getAdapterPosition();
+                    mOnItemOnClickListener.onItemClick(holder.itemView,position);
+                }
+            });
+        }
     }
     // 获取条目总数
     @Override

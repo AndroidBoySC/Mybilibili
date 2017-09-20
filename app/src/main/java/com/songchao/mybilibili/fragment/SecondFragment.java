@@ -1,6 +1,7 @@
 package com.songchao.mybilibili.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.songchao.mybilibili.R;
+import com.songchao.mybilibili.activity.NewsDetailActivity;
 import com.songchao.mybilibili.adapter.MyRecyclerViewAdapter;
 import com.songchao.mybilibili.config.NetConfig;
 import com.songchao.mybilibili.model.DoubleNews;
@@ -54,6 +56,15 @@ public class SecondFragment extends Fragment {
         mAdapter = new MyRecyclerViewAdapter(mNewsList,getActivity());
         initData();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        if (mAdapter!=null){
+            mAdapter.setOnItemOnClickListener(new MyRecyclerViewAdapter.onItemOnClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            });
+        }
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

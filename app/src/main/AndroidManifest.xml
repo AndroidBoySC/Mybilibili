@@ -148,6 +148,8 @@
         </activity>
         <activity android:name=".activity.DetailActivity">
         </activity>
+        <activity android:name=".activity.NewsDetailActivity">
+        </activity>
     </application>
 
 </manifest>

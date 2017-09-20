@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/activity_news_detail"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.songchao.mybilibili.activity.NewsDetailActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_news_detail"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collaps_news_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorAccent"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/iv_news_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/google"
+                app:layout_collapseMode="parallax" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_news_detail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:id="@+id/ll_news_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="20dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:textColor="#231e1e"
+                    android:text="      红尘冷暖，岁月清浅，仓促间，遗落一地，如诗的句点，不甘愿，不决绝，掬一份刻骨的思念，系一根心的挂牵，在你回眸的瞬间，一抹兰轩的底色，悄然纳于心间，不问深浅，暖一世的欢颜。
+                    ----------题记"/>
+
+            </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/iv_news_detail_one"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:clickable="true"
+                android:src="@mipmap/newsone"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:id="@+id/iv_news_detail_two"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@mipmap/newstwo"
+                android:clickable="true"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="5dp"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="20dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:textColor="#231e1e"
+                    android:text="      近来，有丝丝倦怠，铺天盖地的不肯离开，执笔，画圈，一闪而过的念，总是一而再，再而三的被搁浅，那些不情不愿的小情绪，占领了太多的空间，庸庸碌碌中，任光阴无情的在指缝中删删减减。
+  早春，微寒缠绵，风，温和的吹醒，春的语言，柳丝抽芽，百花争艳，桃花灼灼的世界是温婉多情的烟花三月。柳岸花堤，亭水榭间，行吟山水，一梦千年。“水光潋滟晴方好，山色空蒙雨亦奇。欲把西湖比西子，淡妆浓抹总相宜”。爱上一座城，爱它的雅韵别致，温润纤细，痴恋一场雨，恋它的清新淡雅，水墨成烟。空蒙蒙的烟雨，摇曳着柳枝，泪水涟涟。古往今来，江南春梦，被悠悠岁华，洗濯了千年。忧怨的姑娘，青石板的小巷，一柄多情的油纸伞，清晰而玲珑的在一湖瘦水中沉淀。"/>
+
+            </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/iv_news_detail_three"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@mipmap/newsthree"
+                android:clickable="true"
+                android:scaleType="centerCrop"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="20dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:textColor="#231e1e"
+                    android:text="      一朵时光，反复的被书写，写一程山水，春意翩翩，写柴米油盐，独自清闲，写万千的情意，羽化成美丽的语言，写小小的心绪，深深浅浅，心中，始终有一处温暖，如雨后的晨露，洋溢在眉眼，不增不减。佛说：“欲行净土，当净其心，随其心净，即佛土净。圣人求心不求佛，愚人求佛不求心；智者调心不调身，愚者调身不调心。”拥一颗禅心，平和宁静，不攀比，不争名夺利，在温和的光阴中，恪守自己，品人生百味，世事洞明。
+  我心中对于圆满，或许不是鲜衣怒马，也或许不是海棠佳话，而是，一段清简的况味，禅风流韵，与喜欢的人，素心相对，你护我冷暖，我慰你心安，在眼眸顾盼的瞬间，捕捉着岁月最美的箴言，一人一心，一花一叶。
+  如水的良辰，闲云悠悠，薄薄的阳光，还在云上，怀惴着晴朗，与风月对望，迎风中伫立，将繁华与落寞，细细丈量，佛说；万物皆有因果，世事变幻无常，命运，向你掩盖了一扇门，定会为你打开另一窗，只要你用心承载着阳光，便是明媚不可阻挡的方向。
+  行走在岁月的小巷，听风，读雨，夜色空寂，一切烟云，皆会慢慢散去，光阴眷顾，你我默默相依，慢慢老去，红尘若可安好，便可不悲不喜，不离不弃，情真意切，绵绵无期。"/>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
