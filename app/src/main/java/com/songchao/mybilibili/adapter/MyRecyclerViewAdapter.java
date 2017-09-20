@@ -52,9 +52,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         if (!TextUtils.isEmpty(title)){
             holder.titleTextView.setText(title);
         }
-        if (!TextUtils.isEmpty(digest)){
-            holder.digestTextView.setText(digest);
-        }
         if(!TextUtils.isEmpty(time)){
             //json接口里的是秒，Java里是毫秒，所以要乘以1000
             Date date = new Date(Long.parseLong(time)*1000);
@@ -75,12 +72,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
     // viewHolder里面只查找控件
     public static class MyViewHodler extends RecyclerView.ViewHolder{
-        public TextView titleTextView,digestTextView,timeTextView,sourceTextView;
+        public TextView titleTextView,timeTextView,sourceTextView;
         public ImageView mImageView;
         public MyViewHodler(View itemView) {
             super(itemView);
             titleTextView = (TextView) itemView.findViewById(R.id.title_doublenews);
-            digestTextView = (TextView) itemView.findViewById(R.id.digest_doublenews);
             timeTextView = (TextView) itemView.findViewById(R.id.time_doublenews);
             sourceTextView = (TextView) itemView.findViewById(R.id.source_doublenews);
             mImageView = (ImageView) itemView.findViewById(R.id.iv_doublenews);
