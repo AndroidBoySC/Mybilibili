@@ -64,7 +64,7 @@ public class AddDiaryActivity extends AppCompatActivity {
         mAddDiaryEtTitle.setText(intent.getStringExtra("title"));
         mAddDiaryTvDate.setText("今天，" + GetDate.getDate());
         mAddDiaryEtContent.setText(intent.getStringExtra("content"));
-        mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null, 4);
+        mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null, 5);
     }
 
 

@@ -78,7 +78,7 @@ public class FouthFragment extends Fragment {
         ButterKnife.bind(this,view);
         //EventBus第二步注册事件，这块不能用getActivity
         EventBus.getDefault().register(this);
-        mHelper = new MySaveDatabaseHelper(getActivity(), "QiuShi.db", null, 4);
+        mHelper = new MySaveDatabaseHelper(getActivity(), "QiuShi.db", null, 5);
         getDiaryBeanList();
         initTitle();
         return view;

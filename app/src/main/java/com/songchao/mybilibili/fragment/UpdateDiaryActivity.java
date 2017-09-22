@@ -72,7 +72,7 @@ public class UpdateDiaryActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.tv_title);
         textView.setText("修改日记");
         ButterKnife.bind(this);
-        mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null, 4);
+        mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null, 5);
         Intent intent = getIntent();
         mUpdateDiaryTvDate.setText("今天，" + GetDate.getDate());
         mUpdateDiaryEtTitle.setText(intent.getStringExtra("title"));

@@ -43,7 +43,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_history);
         mVideos = new ArrayList<>();
-        mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null,4);
+        mHelper = new MySaveDatabaseHelper(this, "QiuShi.db", null,5);
         final SQLiteDatabase db = mHelper.getWritableDatabase();
         Cursor cursor = db.query("QiuShiPin", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {

@@ -23,6 +23,9 @@ public class MySaveDatabaseHelper extends SQLiteOpenHelper{
     //日记表
     public static final String CREATE_DIARY = "create table Diary(id integer primary key autoincrement,"+"date text" +
             ",title text,tag text,content text)";
+    //搜索记录表
+    public static final String CREATE_SEARCH = "create table Search(id integer primary key autoincrement,"+"" +
+            "name varchar(200))";
 
     private Context mContext;
     public MySaveDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -36,6 +39,7 @@ public class MySaveDatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(CREATE_QIUSHIPIN);
         sqLiteDatabase.execSQL(CREATE_DOWNQIUSHIPIN);
         sqLiteDatabase.execSQL(CREATE_DIARY);
+        sqLiteDatabase.execSQL(CREATE_SEARCH);
     }
 
     @Override
@@ -44,6 +48,7 @@ public class MySaveDatabaseHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL("drop table if exists QiuShiPin");
         sqLiteDatabase.execSQL("drop table if exists DownQiuShiPin");
         sqLiteDatabase.execSQL("drop table if exists Diary");
+        sqLiteDatabase.execSQL("drop table if exists Search");
         onCreate(sqLiteDatabase);
     }
 }

@@ -35,7 +35,7 @@ public class HunCunAdapter extends RecyclerView.Adapter<HunCunAdapter.PicViewHol
         mContext = context;
         mList = list;
         mHelper = helper;
-        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,4);
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,5);
         mHelper.getWritableDatabase();
     }
 

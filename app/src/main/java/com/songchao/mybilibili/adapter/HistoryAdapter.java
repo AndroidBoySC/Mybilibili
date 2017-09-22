@@ -55,7 +55,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         mVideos = videos;
         mHelper = helper;
         mContext = context;
-        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,4);
+        mHelper = new MySaveDatabaseHelper(context,"QiuShi.db",null,5);
         mHelper.getWritableDatabase();
     }
 
