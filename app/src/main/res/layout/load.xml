@@ -3,6 +3,10 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/yasuo">
+              >
+    <com.songchao.mybilibili.view.CustomVideoView
+        android:id="@+id/my_video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
