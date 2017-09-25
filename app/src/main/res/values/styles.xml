@@ -17,6 +17,8 @@
     </style>
     <style name="AppTheme.Full" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
+        <!--下面这行解决启动时大概会白屏1秒的问题，这个问题在替换为视频之后出现的，启动页为图片时没有，相关总结看word-->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="my_dialog">
