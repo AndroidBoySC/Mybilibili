@@ -3,7 +3,6 @@ package com.songchao.mybilibili.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
@@ -14,7 +13,6 @@ public class ThemeActivity extends AppCompatActivity {
     MapView mMapView = null;
     AMap mAMap;
     MyLocationStyle mMyLocationStyle;
-    private Button mButton,mButton1,mButton2;
     //高德地图SDK5.0之后定位不需要接入定位SDK
 //    public AMapLocationClient mAMapLocationClient;
 //    public AMapLocationClientOption mAMapLocationClientOption = null;
