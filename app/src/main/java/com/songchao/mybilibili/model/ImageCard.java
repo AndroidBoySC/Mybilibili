@@ -10,12 +10,16 @@ import java.io.Serializable;
 
 public class ImageCard implements Serializable{
     private String name;
+    private String ttime;
+    private int like;
     private int imgId;
 
 
-    public ImageCard(String name, int imgId) {
+    public ImageCard(String name, int imgId,String ttime,int like) {
         this.name = name;
         this.imgId = imgId;
+        this.ttime = ttime;
+        this.like = like;
     }
 
     public String getName() {
@@ -24,5 +28,13 @@ public class ImageCard implements Serializable{
 
     public int getImgId() {
         return imgId;
+    }
+
+    public String getTtime() {
+        return ttime;
+    }
+
+    public int getLike() {
+        return like;
     }
 }

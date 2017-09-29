@@ -65,6 +65,8 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
         if(holder instanceof MyViewHolder){
             //holder.mCardView.setTag("tag");
             holder.mTextView.setText(data.getName());
+            holder.mTextViewTime.setText(data.getTtime());
+            holder.mImageViewLike.setImageResource(R.mipmap.save);
             Glide.with(mContext).load(data.getImgId()).into(holder.mImageView);
 
         }
@@ -73,6 +75,12 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
             public void onClick(View view) {
                 DetailActivity.startActivity(mContext,mImageCardList,(position-1));
                 Log.d("Photo","position:"+position);
+            }
+        });
+        holder.mImageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.mImageViewLike.setImageResource(R.mipmap.save2);
             }
         });
 
@@ -90,8 +98,8 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         CardView mCardView;
-        ImageView mImageView;
-        TextView mTextView;
+        ImageView mImageView,mImageViewLike;
+        TextView mTextView,mTextViewTime;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +107,8 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
             mCardView = (CardView) itemView;
             mImageView = (ImageView) itemView.findViewById(R.id.card_image);
             mTextView = (TextView) itemView.findViewById(R.id.card_text);
+            mTextViewTime = (TextView) itemView.findViewById(R.id.card_time);
+            mImageViewLike = (ImageView) itemView.findViewById(R.id.card_like);
         }
     }
 

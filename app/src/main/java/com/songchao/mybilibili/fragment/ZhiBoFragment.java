@@ -21,8 +21,10 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.transformer.CubeOutTransformer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -34,31 +36,21 @@ public class ZhiBoFragment extends Fragment {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     Banner mBanner;
     static final int REFRESH_COMPLETE = 0x1112;
+    //获得系统当前时间
+    Date mDate = new Date();
+    SimpleDateFormat mFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+    String date = mFormat.format(mDate);
     //展示的是本地图片
-    private ImageCard[] mImageCards = {new ImageCard("one",R.mipmap.yasuo_01_cn),new ImageCard("two",R.mipmap.yasuo_04_cn),
-    new ImageCard("three",R.mipmap.yasuo_05_cn),new ImageCard("four",R.mipmap.yasuo_06_cn)};
+    private ImageCard[] mImageCards = {new ImageCard("疾风剑豪",R.mipmap.yasuo_01_cn,date,R.mipmap.save),new ImageCard("西部牛仔",R.mipmap.yasuo_04_cn,date,R.mipmap.save),
+    new ImageCard("合金装备",R.mipmap.yasuo_05_cn,date,R.mipmap.save),new ImageCard("腥红之月",R.mipmap.yasuo_06_cn,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
+            new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
+            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save)};
     private List<ImageCard> mImageCardList = new ArrayList<>();
     private RecyclerViewCardAdapter mAdapter;
-    //viewpager容器
-    //private ViewPager mViewPager;
-    //图片的集合
-    //private List<ImageView> mImageViews;
-    //点的集合
-    //private List<View> mDots;
-    //private int currentItem;
-    //记录上一次点的位置
-    //private int oldPosition = 0;
-    //存放图片的id
-    //private int[] imageIds = new int[]{
-      //R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher,R.mipmap.ic_launcher
-    //};
-    //存放图片的标题
-    //private String[] titles = new String[]{
-      //"T-ara女团朴智妍","疾风剑豪亚索","步步惊心刘诗诗","吴奇隆老婆刘诗诗","东北姑娘李冰冰"
-    //};
-    //private TextView title;
-    //private ScheduledExecutorService mScheduledExecutorService;
-    //private ViewPagerAdapter mViewPagerAdapter;
 
     public ZhiBoFragment() {
         // Required empty public constructor
@@ -91,11 +83,12 @@ public class ZhiBoFragment extends Fragment {
         mBanner = (Banner) header.findViewById(R.id.banner);
         mImageCardList.clear();
         //随机生成30张
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 22; i++) {
             Random random = new Random();
             int index = random.nextInt(mImageCards.length);
             mImageCardList.add(mImageCards[index]);
         }
+        
 
         mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H / 4));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
