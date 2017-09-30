@@ -13,13 +13,15 @@ public class ImageCard implements Serializable{
     private String ttime;
     private int like;
     private int imgId;
+    private String kind;
 
 
-    public ImageCard(String name, int imgId,String ttime,int like) {
+    public ImageCard(String name, int imgId,String ttime,int like,String kind) {
         this.name = name;
         this.imgId = imgId;
         this.ttime = ttime;
         this.like = like;
+        this.kind = kind;
     }
 
     public String getName() {
@@ -32,6 +34,10 @@ public class ImageCard implements Serializable{
 
     public String getTtime() {
         return ttime;
+    }
+
+    public String getKind() {
+        return kind;
     }
 
     public int getLike() {

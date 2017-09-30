@@ -1,6 +1,7 @@
 package com.songchao.mybilibili.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gavin.com.library.StickyDecoration;
+import com.gavin.com.library.listener.GroupListener;
 import com.songchao.mybilibili.APP;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.adapter.RecyclerViewCardAdapter;
 import com.songchao.mybilibili.model.ImageCard;
+import com.songchao.mybilibili.model.ImageCardUtil;
+import com.songchao.mybilibili.util.DensityUtil;
 import com.songchao.mybilibili.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -40,24 +45,24 @@ public class ZhiBoFragment extends Fragment {
     SimpleDateFormat mFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
     String date = mFormat.format(mDate);
     //展示的是本地图片
-    private ImageCard[] mImageCards = {new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),
-            new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
-            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save)
-            ,new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
-            new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
-            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
-            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save)};
+//    private ImageCard[] mImageCards = {new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),
+//            new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
+//            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save)
+//            ,new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
+//            new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
+//            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
+//            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save)};
     private List<ImageCard> mImageCardList = new ArrayList<>();
     private RecyclerViewCardAdapter mAdapter;
 
@@ -98,12 +103,32 @@ public class ZhiBoFragment extends Fragment {
 //            mImageCardList.add(mImageCards[index]);
 //        }
         //把整个数组添加到集合中去
-        mImageCardList.addAll(Arrays.asList(mImageCards));
+        //mImageCardList.addAll(Arrays.asList(mImageCards));
+        //最终展示的方式
+        mImageCardList.addAll(ImageCardUtil.getImageCardList());
 
         mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H / 4));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new RecyclerViewCardAdapter(getActivity(),mImageCardList);
+        StickyDecoration decoration = StickyDecoration.Builder.init(new GroupListener() {
+            @Override
+            public String getGroupName(int position) {
+                if (mImageCardList.size() > position){
+                    return mImageCardList.get(position).getKind();
+                }
+                return null;
+            }
+        }).setGroupBackground(Color.parseColor("#9cbaa7"))    //背景色
+                .setGroupHeight(DensityUtil.dip2px(getActivity(), 30))       //高度
+                .setDivideColor(Color.parseColor("#9cbaa7"))        //分割线颜色
+                .setDivideHeight(DensityUtil.dip2px(getActivity(), 1))       //分割线高度 (默认没有分割线)
+                .setGroupTextColor(Color.BLACK)                     //字体颜色
+                .setGroupTextSize(DensityUtil.sp2px(getActivity(), 15))      //字体大小
+                .setTextSideMargin(DensityUtil.dip2px(getActivity(), 10))    // 边距   靠左时为左边距  靠右时为右边距
+                .isAlignLeft(true)                                 //靠右显示  （默认靠左）
+                .build();
+        mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mAdapter);
         //        setHeader(mRecyclerView);
         initListener();

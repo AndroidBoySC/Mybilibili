@@ -16,6 +16,7 @@ import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.activity.DetailActivity;
 import com.songchao.mybilibili.model.ImageCard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,11 +30,11 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
     public static final int TYPE_NORMAL = 1;
     private View mHeaderView;
     private Context mContext;
-    private List<ImageCard> mImageCardList;
+    private List<ImageCard> mImageCardList = new ArrayList<>();
 
     public RecyclerViewCardAdapter(Context context, List<ImageCard> imageCardList) {
         mContext = context;
-        mImageCardList = imageCardList;
+        mImageCardList.addAll(imageCardList);
     }
 
 
@@ -64,6 +65,8 @@ public class RecyclerViewCardAdapter extends RecyclerView.Adapter<RecyclerViewCa
         final ImageCard data = mImageCardList.get(pos);
         if(holder instanceof MyViewHolder){
             //holder.mCardView.setTag("tag");
+            //这句并没起到什么作用
+            //holder.mCardView.setTag(mImageCardList.get(pos));
             holder.mTextView.setText(data.getName());
             holder.mTextViewTime.setText(data.getTtime());
             holder.mImageViewLike.setImageResource(R.mipmap.save);
