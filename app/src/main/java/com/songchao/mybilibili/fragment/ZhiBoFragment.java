@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,14 +40,24 @@ public class ZhiBoFragment extends Fragment {
     SimpleDateFormat mFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
     String date = mFormat.format(mDate);
     //展示的是本地图片
-    private ImageCard[] mImageCards = {new ImageCard("疾风剑豪",R.mipmap.yasuo_01_cn,date,R.mipmap.save),new ImageCard("西部牛仔",R.mipmap.yasuo_04_cn,date,R.mipmap.save),
-    new ImageCard("合金装备",R.mipmap.yasuo_05_cn,date,R.mipmap.save),new ImageCard("腥红之月",R.mipmap.yasuo_06_cn,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
+    private ImageCard[] mImageCards = {new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),
+            new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
+            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save)
+            ,new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
             new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
             new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
             new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
             new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save),
             new ImageCard("玛莎拉蒂",R.mipmap.mingche01,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche02,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche03,date,R.mipmap.save),
-            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save)};
+            new ImageCard("玛莎拉蒂",R.mipmap.mingche04,date,R.mipmap.save),new ImageCard("玛莎拉蒂",R.mipmap.mingche05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua01,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua02,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua03,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua04,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua05,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua06,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua07,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua08,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua09,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua10,date,R.mipmap.save),
+            new ImageCard("芳华",R.mipmap.fanghua11,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua12,date,R.mipmap.save),new ImageCard("芳华",R.mipmap.fanghua13,date,R.mipmap.save)};
     private List<ImageCard> mImageCardList = new ArrayList<>();
     private RecyclerViewCardAdapter mAdapter;
 
@@ -83,12 +92,13 @@ public class ZhiBoFragment extends Fragment {
         mBanner = (Banner) header.findViewById(R.id.banner);
         mImageCardList.clear();
         //随机生成30张
-        for (int i = 0; i < 22; i++) {
-            Random random = new Random();
-            int index = random.nextInt(mImageCards.length);
-            mImageCardList.add(mImageCards[index]);
-        }
-        
+//        for (int i = 0; i < 22; i++) {
+//            Random random = new Random();
+//            int index = random.nextInt(mImageCards.length);
+//            mImageCardList.add(mImageCards[index]);
+//        }
+        //把整个数组添加到集合中去
+        mImageCardList.addAll(Arrays.asList(mImageCards));
 
         mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H / 4));
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
@@ -98,16 +108,16 @@ public class ZhiBoFragment extends Fragment {
         //        setHeader(mRecyclerView);
         initListener();
 
-        ArrayList<String> titles = new ArrayList<>(Arrays.asList(new String[]{"安卓牛逼!", "安卓牛逼!!", "安卓牛逼!!!",
-                "安卓牛逼!!!!"}));
+        ArrayList<String> titles = new ArrayList<>(Arrays.asList(new String[]{"芳华文工团舞蹈", "芳华练舞", "芳华练习室合影",
+                "芳华天安门合影"}));
         Log.d("Photo","titles.size:" + titles.size());
         Log.d("Photo","APP.images.size:" + APP.images.size());
         //APP继承的是Application一定要在清单文件中注册！！！
         mBanner.setImages(APP.images)
                 .setBannerAnimation(CubeOutTransformer.class)
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE)
-                .setBannerTitles(titles)
                 .setIndicatorGravity(BannerConfig.RIGHT)
+                .setBannerTitles(titles)
                 .setImageLoader(new GlideImageLoader())
                 .start();
         mAdapter.setHeaderView(header);
@@ -124,96 +134,7 @@ public class ZhiBoFragment extends Fragment {
     }
 
     /**
-     * 利用线程池定时执行轮播动画
-     */
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        mScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-//        mScheduledExecutorService.scheduleWithFixedDelay(new ViewPagerTask(),2,2, TimeUnit.SECONDS);
-//    }
-
-    /**
-     * 图片轮播任务
-     */
-//    private class ViewPagerTask implements Runnable{
-//
-//        @Override
-//        public void run() {
-//            currentItem = (currentItem + 1)%imageIds.length;
-//            mHandler.sendEmptyMessage(0);
-//        }
-//    }
-
-    /**
-     * 接收子线程传递过来的数据
-     */
-//    private Handler mHandler = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            mViewPager.setCurrentItem(currentItem);
-//            //无限循环
-//            //mViewPager.setCurrentItem(Integer.MAX_VALUE >> 1,false);这样会出现越界的异常
-//        }
-//    };
-
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(mScheduledExecutorService != null){
-//            mScheduledExecutorService.shutdown();
-//            mScheduledExecutorService = null;
-//        }
-//    }
-
-    /**
      * header布局里的控件必须要通过header找，通过view找会出现空指针的异常
      * @param view
      */
-//    private void setHeader(RecyclerView view){
-//        View header = LayoutInflater.from(getActivity()).inflate(R.layout.header,view,false);
-        //View header = LayoutInflater.from(this).inflate(R.layout.header, null);
-//        mBanner = (Banner) header.findViewById(R.id.banner);
-//        mBanner.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, APP.H / 4));
-//        title = (TextView) header.findViewById(R.id.tv_title_header);
-//        title.setText(titles[0]);
-//        mViewPager = (ViewPager) header.findViewById(R.id.vp_zhibo);
-//        //显示的图片
-//        mImageViews = new ArrayList<>();
-//        for (int i=0;i<imageIds.length;i++){
-//            ImageView imageView = new ImageView(getActivity());
-//            imageView.setBackgroundResource(imageIds[i]);
-//            mImageViews.add(imageView);
-//        }
-//        mViewPagerAdapter = new ViewPagerAdapter(mImageViews,getActivity());
-//        //显示的小点
-//        mDots = new ArrayList<>();
-//        mDots.add(header.findViewById(R.id.dot_0));
-//        mDots.add(header.findViewById(R.id.dot_1));
-//        mDots.add(header.findViewById(R.id.dot_2));
-//        mDots.add(header.findViewById(R.id.dot_3));
-//        mDots.add(header.findViewById(R.id.dot_4));
-//        mAdapter.setHeaderView(header);
-//        mViewPager.setAdapter(mViewPagerAdapter);
-//        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                title.setText(titles[position]);
-//                mDots.get(position).setBackgroundResource(R.drawable.dot_focus);
-//                mDots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
-//                oldPosition = position;
-//                currentItem = position;
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-    //}
 }
