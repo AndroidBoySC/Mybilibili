@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,7 +22,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     public TabLayout mTabLayout;
-    private ViewPager mViewPager;
     private NavigationView mNavigationView;
     private CircleImageView mCircleImageView;
     private TextView textViewLogin,textViewShare;
@@ -87,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        //可能会解决surfaceview在fragment切换时闪屏问题。这行代码确实能解决！！！
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         //有动画效果
         Explode explode = new Explode();
         explode.setDuration(500);

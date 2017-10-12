@@ -128,7 +128,7 @@ public class ZhiBoFragment extends Fragment {
                 .setTextSideMargin(DensityUtil.dip2px(getActivity(), 10))    // 边距   靠左时为左边距  靠右时为右边距
                 .isAlignLeft(true)                                 //靠右显示  （默认靠左）
                 .build();
-        mRecyclerView.addItemDecoration(decoration);
+        //mRecyclerView.addItemDecoration(decoration);
         mRecyclerView.setAdapter(mAdapter);
         //        setHeader(mRecyclerView);
         initListener();

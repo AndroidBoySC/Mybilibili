@@ -12,7 +12,7 @@
         android:id="@+id/tiaoguo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="跳过"
+        android:text="跳过 >>"
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:clickable="true"

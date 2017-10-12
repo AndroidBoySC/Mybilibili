@@ -33,6 +33,13 @@ abstract class BaseDecoration extends RecyclerView.ItemDecoration {
     }
 
 
+    /**
+     * 这个方法主要用来绘制分割线
+     * @param outRect
+     * @param view
+     * @param parent
+     * @param state
+     */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
