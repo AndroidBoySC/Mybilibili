@@ -41,7 +41,6 @@ import android.widget.Toast;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.fragment.DongTaiFragment;
 import com.songchao.mybilibili.fragment.FirstFragment;
-import com.songchao.mybilibili.fragment.FouthFragment;
 import com.songchao.mybilibili.fragment.SecondFragment;
 import com.songchao.mybilibili.util.BottomNavigationViewHelper;
 
@@ -89,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //可能会解决surfaceview在fragment切换时闪屏问题。这行代码确实能解决！！！
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         //有动画效果
-        Explode explode = new Explode();
-        explode.setDuration(500);
-        getWindow().setExitTransition(explode);
-        getWindow().setEnterTransition(explode);
+//        Explode explode = new Explode();
+//        explode.setDuration(500);
+//        getWindow().setExitTransition(explode);
+//        getWindow().setEnterTransition(explode);
         fragments = new ArrayList<>();
         FragmentManager manager = getSupportFragmentManager();
         if(savedInstanceState == null){
@@ -102,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             fragments.add(fragment);
             fragment = new DongTaiFragment();
             fragments.add(fragment);
-            fragment = new FouthFragment();
-            fragments.add(fragment);
+            //fragment = new FouthFragment();
+            //fragments.add(fragment);
             FragmentTransaction transaction = manager.beginTransaction();
             int index = 0;
             for (Fragment f : fragments){
@@ -316,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
            Window dialogWindow = mCameraDialog.getWindow();
            dialogWindow.setGravity(Gravity.BOTTOM);
            //有个滑出的动画，对高度进行设置，不让他全屏
-           dialogWindow.setWindowAnimations(R.style.dialogstyle);
+           //dialogWindow.setWindowAnimations(R.style.dialogstyle);
            WindowManager.LayoutParams lp = dialogWindow.getAttributes();//获取对话框当前的参数值
            lp.x = 0; // 新位置X坐标
            lp.y = -20; // 新位置Y坐标
@@ -329,13 +328,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
            dialogWindow.setAttributes(lp);
            mCameraDialog.show();
         }else {
-           Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-           startActivity(intent);
+           //Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+           //startActivity(intent);
        }
     }
 
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        //这里注意设置标题要在setsupportactionbar方法前调用才会有效
         mToolbar.setTitle(" ");
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationIcon(R.mipmap.home3);
@@ -366,6 +366,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mEditor = mPreferences.edit();
     }
 
+    /**
+     * 创建关联菜单
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_tool,menu);
@@ -384,8 +389,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     startActivity(intent);
                     break;
                 case R.id.action_download:
-                    Intent intent1 = new Intent(MainActivity.this,RecordActivity.class);
-                    startActivity(intent1);
+                    //Intent intent1 = new Intent(MainActivity.this,RecordActivity.class);
+                    //startActivity(intent1);
                     break;
                 case R.id.action_search:
                     Intent intent2 = new Intent(MainActivity.this,SearchActivity.class);

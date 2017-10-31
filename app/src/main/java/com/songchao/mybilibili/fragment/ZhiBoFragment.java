@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gavin.com.library.StickyDecoration;
-import com.gavin.com.library.listener.GroupListener;
 import com.songchao.mybilibili.APP;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.adapter.RecyclerViewCardAdapter;
@@ -111,26 +109,9 @@ public class ZhiBoFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new RecyclerViewCardAdapter(getActivity(),mImageCardList);
-        StickyDecoration decoration = StickyDecoration.Builder.init(new GroupListener() {
-            @Override
-            public String getGroupName(int position) {
-                if (mImageCardList.size() > position){
-                    return mImageCardList.get(position).getKind();
-                }
-                return null;
-            }
-        }).setGroupBackground(Color.parseColor("#9cbaa7"))    //背景色
-                .setGroupHeight(DensityUtil.dip2px(getActivity(), 30))       //高度
-                .setDivideColor(Color.parseColor("#9cbaa7"))        //分割线颜色
-                .setDivideHeight(DensityUtil.dip2px(getActivity(), 1))       //分割线高度 (默认没有分割线)
-                .setGroupTextColor(Color.BLACK)                     //字体颜色
-                .setGroupTextSize(DensityUtil.sp2px(getActivity(), 15))      //字体大小
-                .setTextSideMargin(DensityUtil.dip2px(getActivity(), 10))    // 边距   靠左时为左边距  靠右时为右边距
-                .isAlignLeft(true)                                 //靠右显示  （默认靠左）
-                .build();
-        //mRecyclerView.addItemDecoration(decoration);
+
         mRecyclerView.setAdapter(mAdapter);
-        //        setHeader(mRecyclerView);
+//                setHeader(mRecyclerView);
         initListener();
 
         ArrayList<String> titles = new ArrayList<>(Arrays.asList(new String[]{"芳华文工团舞蹈", "芳华练舞", "芳华练习室合影",

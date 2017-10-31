@@ -49,8 +49,6 @@
         </activity>
         <activity android:name=".activity.QRCodeActivity">
         </activity>
-        <activity android:name=".activity.RecordActivity">
-        </activity>
         <activity android:name=".activity.SearchActivity">
         </activity>
         <activity android:name=".activity.HistoryActivity">
@@ -68,12 +66,6 @@
         <activity android:name=".activity.ThemeActivity">
         </activity>
         <activity android:name=".activity.NightActivity">
-        </activity>
-        <activity android:name=".activity.LoginActivity">
-        </activity>
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:theme="@style/Translucent">
         </activity>
 
         <!-- ShareSDK的activity -->
@@ -150,10 +142,6 @@
             android:exported="true">
         </service>
 
-        <activity android:name=".fragment.UpdateDiaryActivity">
-        </activity>
-        <activity android:name=".fragment.AddDiaryActivity">
-        </activity>
         <activity android:name=".activity.DetailActivity">
         </activity>
         <activity android:name=".activity.NewsDetailActivity">
