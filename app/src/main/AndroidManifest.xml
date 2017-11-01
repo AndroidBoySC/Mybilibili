@@ -18,8 +18,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
@@ -34,6 +34,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="20747c7fc7136dc459ae090ca5d03061"/>
+
         <activity
             android:name=".activity.LoadActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -45,28 +46,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
-        </activity>
-        <activity android:name=".activity.QRCodeActivity">
-        </activity>
-        <activity android:name=".activity.SearchActivity">
-        </activity>
-        <activity android:name=".activity.HistoryActivity">
-        </activity>
-        <activity android:name=".activity.HuancunActivity">
-        </activity>
-        <activity android:name=".activity.ShoucangActivity">
-        </activity>
-        <activity android:name=".activity.OutLoginActivity">
-        </activity>
-        <activity android:name=".activity.HuiyuanActivity">
-        </activity>
-        <activity android:name=".activity.SettingActivity">
-        </activity>
-        <activity android:name=".activity.ThemeActivity">
-        </activity>
-        <activity android:name=".activity.NightActivity">
-        </activity>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.QRCodeActivity"/>
+        <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.HistoryActivity"/>
+        <activity android:name=".activity.HuancunActivity"/>
+        <activity android:name=".activity.ShoucangActivity"/>
+        <activity android:name=".activity.OutLoginActivity"/>
+        <activity android:name=".activity.HuiyuanActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.ThemeActivity"/>
+        <activity android:name=".activity.NightActivity"/>
 
         <!-- ShareSDK的activity -->
         <activity
@@ -134,17 +124,16 @@
         <service
             android:name=".service.DownloadService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"/>
         <service
             android:name=".service.RecordingService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"/>
 
-        <activity android:name=".activity.DetailActivity">
-        </activity>
-        <activity android:name=".activity.NewsDetailActivity">
+        <activity android:name=".activity.DetailActivity"/>
+        <activity android:name=".activity.NewsDetailActivity"/>
+        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.RegisterActivity">
         </activity>
     </application>
 
