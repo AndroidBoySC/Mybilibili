@@ -1,10 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.songchao.mybilibili.activity.RegisterActivity">
+    <include layout="@layout/title"/>
+    <TextView
+        android:id="@+id/tv_register_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="请确认你的国家或地区并输入手机号"
+        android:textColor="#000000"
+        android:textSize="16sp"/>
+    <RelativeLayout
+        android:id="@+id/rl_register_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp">
+        <TextView
+            android:id="@+id/tv_register_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中国大陆"
+            android:textSize="20sp"
+            android:textColor="#ff4081"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="3dp"/>
+        <TextView
+            android:id="@+id/tv_register_null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_alignParentRight="true"
+            android:layout_margin="3dp"/>
 
-</android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <EditText
+        android:id="@+id/edit_register_num"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="3dp"
+        android:hint="请输入常用手机号"/>
+    <Button
+        android:id="@+id/btn_register_getNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取验证码"
+        android:textColor="#ffffff"
+        android:background="#ff4081"
+        android:layout_margin="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击获取验证码按钮，即表示同意注册协议"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

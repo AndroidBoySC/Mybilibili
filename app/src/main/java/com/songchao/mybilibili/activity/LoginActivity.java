@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.songchao.mybilibili.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private ImageView mImageViewLeft,mImageViewRight;
+    private ImageView mImageViewLeft,mImageViewRight,mImageViewBack;
     private EditText mEditTextUser,mEditTextPass;
     private Button mButtonRegiter,mButtonLogin;
 
@@ -23,12 +23,13 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         bilibili();
         setListener();
+        mImageViewBack.setOnClickListener(view -> LoginActivity.this.finish());
     }
 
     private void setListener() {
         mButtonRegiter.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            LoginActivity.this.startActivity(intent);
         });
     }
 
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initView() {
         mImageViewLeft = findViewById(R.id.image_login_left);
         mImageViewRight = findViewById(R.id.image_login_right);
+        mImageViewBack = findViewById(R.id.back_title);
         mEditTextUser = findViewById(R.id.edit_user);
         mEditTextPass = findViewById(R.id.edit_password);
         mButtonRegiter = findViewById(R.id.btn_register);

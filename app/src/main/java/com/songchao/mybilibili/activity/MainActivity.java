@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         //可能会解决surfaceview在fragment切换时闪屏问题。这行代码确实能解决！！！
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        //有动画效果
+        //有动画效果,但至少是API21以上，有局限性
 //        Explode explode = new Explode();
 //        explode.setDuration(500);
 //        getWindow().setExitTransition(explode);

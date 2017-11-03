@@ -135,6 +135,9 @@
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.RegisterActivity">
         </activity>
+        <activity android:name=".activity.ChoiceActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
