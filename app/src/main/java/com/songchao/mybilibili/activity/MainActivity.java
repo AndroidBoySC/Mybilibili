@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.songchao.mybilibili.R;
 import com.songchao.mybilibili.fragment.DongTaiFragment;
 import com.songchao.mybilibili.fragment.FirstFragment;
+import com.songchao.mybilibili.fragment.FouthFragment;
 import com.songchao.mybilibili.fragment.SecondFragment;
 import com.songchao.mybilibili.util.BottomNavigationViewHelper;
 
@@ -100,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             fragments.add(fragment);
             fragment = new DongTaiFragment();
             fragments.add(fragment);
-            //fragment = new FouthFragment();
-            //fragments.add(fragment);
+            fragment = new FouthFragment();
+            fragments.add(fragment);
             FragmentTransaction transaction = manager.beginTransaction();
             int index = 0;
             for (Fragment f : fragments){
